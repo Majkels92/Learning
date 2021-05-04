@@ -58,14 +58,14 @@ def callback_on_checkbutton_click():
 def display():
     for i in range(len(calendar)):
         lp = i + 1
-        status.append(IntVar())
+        print("status dla:", lp, calendar[i].stat)
+        status.append(BooleanVar())
         if calendar[i].stat == False:
             print("display() called. For index i: ", i, ' setting checkbutton value to checked (onvalue=0)')
             status[i].set(False)
         elif calendar[i].stat == True:
             print("display() called. For index i: ", i, ' setting checkbutton value to unchecked (offvalue=1)')
             status[i].set(True)
-
         checkbuttons.append(
             Checkbutton(
                 master=okno_glowne,
