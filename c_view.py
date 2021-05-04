@@ -1,9 +1,10 @@
-from tkinter import *
 import c_body
+from tkinter import *
 
 calendar = []
 status = []
 checkbuttons = []
+
 
 def config():
     global listback, okno_glowne, button_display_list, button_add_task, button_delete_task, button_delete_all_done, button_exit_app
@@ -37,7 +38,7 @@ def add():
         global task_obj, calendar
         date = c_body.CalendarObj.nowDate()
         time = c_body.CalendarObj.nowTime()
-        task_obj = c_body.CalendarObj(task.get(), date, time, stat=True)
+        task_obj = c_body.CalendarObj(task.get(), date, time)
         calendar.append(task_obj)
         insert_root.destroy()
 
@@ -50,7 +51,7 @@ def callback_on_checkbutton_click():
     print("One of the Checkbuttons clicked!")
     for i in range(len(calendar)):
         print('\tOld calendar[' + str(i) + '] state: ' + calendar[i].displayObj())
-        calendar[i].stat = status[i].get() == 1
+        calendar[i].stat = status[i].get()
         print('\t\tNew calendar[' + str(i) + '] state: ' + calendar[i].displayObj())
 
 
@@ -58,20 +59,20 @@ def display():
     for i in range(len(calendar)):
         lp = i + 1
         status.append(IntVar())
-        if calendar[i].stat:
-            print("display() called. For index i: ", i, ' setting checkbutton value to checked (onvalue=1)')
-            status[i].set(1)
-        else:
-            print("display() called. For index i: ", i, ' setting checkbutton value to unchecked (offvalue=0)')
-            status[i].set(0)
+        if calendar[i].stat == False:
+            print("display() called. For index i: ", i, ' setting checkbutton value to checked (onvalue=0)')
+            status[i].set(False)
+        elif calendar[i].stat == True:
+            print("display() called. For index i: ", i, ' setting checkbutton value to unchecked (offvalue=1)')
+            status[i].set(True)
 
         checkbuttons.append(
             Checkbutton(
                 master=okno_glowne,
                 text=str(lp) + '.' + calendar[i].displayObj(),
                 variable=status[i],
-                onvalue=1,
-                offvalue=0,
+                onvalue=True,
+                offvalue=False,
                 command=callback_on_checkbutton_click
             )
         )
@@ -81,7 +82,6 @@ def display():
 
 config()
 okno_glowne.mainloop()
-
 """def delete():
     lp = input('delete task number: ')
     i = int(lp) - 1
@@ -99,4 +99,12 @@ def del_all_done():
         if i.stat is False:
             bufor_list.append(i)
     calendar = bufor_list
-    return calendar"""
+    return calendar
+    
+    def callback_on_checkbutton_click():
+    print("One of the Checkbuttons clicked!")
+    for i in range(len(calendar)):
+        print('\tOld calendar[' + str(i) + '] state: ' + calendar[i].displayObj())
+        calendar[i].stat = status[i].get() == 1
+        print('\t\tNew calendar[' + str(i) + '] state: ' + calendar[i].displayObj())
+    """
