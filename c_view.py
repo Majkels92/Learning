@@ -4,6 +4,7 @@ from tkinter import *
 calendar = []
 status = []
 checkbuttons = []
+textlist = []
 
 
 def config():
@@ -59,6 +60,8 @@ def display():
     for i in range(len(calendar)):
         lp = i + 1
         print("status dla:", lp, calendar[i].stat)
+        x = (str(lp) + '. ' + calendar[i].displayObj())
+        textlist.append(x)
         status.append(BooleanVar())
         if calendar[i].stat == False:
             print("display() called. For index i: ", i, ' setting checkbutton value to checked (onvalue=0)')
@@ -69,7 +72,7 @@ def display():
         checkbuttons.append(
             Checkbutton(
                 master=okno_glowne,
-                text=str(lp) + '.' + calendar[i].displayObj(),
+                text=textlist[i],
                 variable=status[i],
                 onvalue=True,
                 offvalue=False,
