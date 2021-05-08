@@ -37,6 +37,8 @@ def add():
         time = c_body.CalendarObj.nowTime()
         task_obj = c_body.CalendarObj(task.get(), date, time)
         calendar.append(task_obj)
+        textlist.append(StringVar())
+        status.append(BooleanVar())
         insert_root.destroy()
     button_add = Button(insert_root, text='dodaj zadanie', command=add_task)
     button_add.grid(column=0, row=1, sticky=E, padx=20, pady=20)
@@ -50,13 +52,13 @@ def callback_on_checkbutton_click():
         print('\t\tNew calendar[' + str(i) + '] state: ' + calendar[i].displayObj())
 
 def display():
+    global calendar, textlist, status, checkbuttons
+    checkbuttons.clear()
     for i in range(len(calendar)):
         lp = i + 1
         print("status dla:", lp, calendar[i].stat)
         x = (str(lp) + '. ' + calendar[i].displayObj())
-        textlist.append(StringVar())
         textlist[i].set(x)
-        status.append(BooleanVar())
         if calendar[i].stat == False:
             print("display() called. For index i: ", i, ' setting checkbutton value to checked (onvalue=0)')
             status[i].set(False)
