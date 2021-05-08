@@ -15,18 +15,14 @@ def config():
     button_display_list.grid(column=0, row=4)
     button_add_task = Button(main_root, text='Add Task', width=12, command=add)
     button_add_task.grid(column=0, row=0)
-    button_delete_task = Button(main_root, text='Delete Task', width=12)
+    button_delete_task = Button(main_root, text='Delete Task', width=12, command=delete)
     button_delete_task.grid(column=0, row=1)
-    button_delete_all_done = Button(main_root, text='Delete All Done', width=12)
+    button_delete_all_done = Button(main_root, text='Delete All Done', width=12, command=del_all_done)
     button_delete_all_done.grid(column=0, row=2)
     button_exit_app = Button(main_root, text='EXIT', width=12, command=exit_window)
     button_exit_app.grid(column=0, row=3)
 
-def exit_window():
-    main_root.destroy()
-
 def add():
-    global task, button_add
     insert_root = Toplevel()
     insert_root.title('Dodaj zadanie:')
     task = Entry(insert_root, width=80)
@@ -39,20 +35,58 @@ def add():
         calendar.append(task_obj)
         textlist.append(StringVar())
         status.append(BooleanVar())
+        display()
         insert_root.destroy()
     button_add = Button(insert_root, text='dodaj zadanie', command=add_task)
     button_add.grid(column=0, row=1, sticky=E, padx=20, pady=20)
     insert_root.mainloop()
 
-def callback_on_checkbutton_click():
-    print("One of the Checkbuttons clicked!")
+def delete():
+    delete_root = Toplevel()
+    delete_root.title('Delete task:')
+    deltask = Entry(delete_root, width=80)
+    deltask.grid(column=0, row=0, padx=20, pady=20)
+    def del_task():
+        global task_obj, calendar
+        i = int(deltask.get()) - 1
+        calendar.remove(calendar[i])
+        status.remove(status[i])
+        checkbuttons.remove(checkbuttons[i])
+        checkbuttons[i].destroy()
+        textlist.remove(textlist[i])
+        display()
+        delete_root.destroy()
+    button_add = Button(delete_root, text='delete task', command=del_task)
+    button_add.grid(column=0, row=1, sticky=E, padx=20, pady=20)
+    delete_root.mainloop()
+
+def del_all_done():
+    global calendar
+    bufor_list = []
     for i in range(len(calendar)):
-        print('\tOld calendar[' + str(i) + '] state: ' + calendar[i].displayObj())
-        calendar[i].stat = status[i].get()
-        print('\t\tNew calendar[' + str(i) + '] state: ' + calendar[i].displayObj())
+        if calendar[i].stat == False:
+            bufor_list.append(i)
+        else:
+            calendar.remove(calendar[i])
+            status.remove(status[i])
+            checkbuttons.remove(checkbuttons[i])
+            checkbuttons[i].destroy()
+            textlist.remove(textlist[i])
+    calendar = bufor_list
+    display()
+    return calendar
+
 
 def display():
     global calendar, textlist, status, checkbuttons
+
+    def callback_on_checkbutton_click():
+        print("One of the Checkbuttons clicked!")
+        for i in range(len(calendar)):
+            print('\tOld calendar[' + str(i) + '] state: ' + calendar[i].displayObj())
+            calendar[i].stat = status[i].get()
+            print('\t\tNew calendar[' + str(i) + '] state: ' + calendar[i].displayObj())
+
     checkbuttons.clear()
     for i in range(len(calendar)):
         lp = i + 1
@@ -77,17 +111,28 @@ def display():
         )
         checkbuttons[i].grid(column=1, row=i+1, sticky=W)
 
+def exit_window():
+    main_root.destroy()
+
 if __name__ == '__main__':
     config()
     main_root.mainloop()
 
 
-"""def delete():
-    lp = input('delete task number: ')
-    i = int(lp) - 1
-    calendar.remove(calendar[i])
+"""
     """
+"""def del_all_done():
+    global calendar
+    bufor_list = []
+    for i in calendar:
+        if i.stat is False:
+            bufor_list.append(i)
+        elif i.stat is True:
+            del status[-1]
+            del textlist[-1]
+    calendar = bufor_list
 
+    return calendar"""
 """def change_status():
     calendar.stat = not calendar.stat
 def update():
