@@ -51,8 +51,8 @@ def delete():
         i = int(deltask.get()) - 1
         calendar.remove(calendar[i])
         status.remove(status[i])
-        checkbuttons.remove(checkbuttons[i])
         checkbuttons[i].destroy()
+        checkbuttons.remove(checkbuttons[i])
         textlist.remove(textlist[i])
         display()
         delete_root.destroy()
@@ -61,32 +61,32 @@ def delete():
     delete_root.mainloop()
 
 def del_all_done():
-    global calendar
-    bufor_list = []
+    global calendar, status, checkbuttons, textlist
+    bufor_calendar = []
+    bufor_status = []
+    bufor_checkbuttons = []
+    bufor_textlist = []
     for i in range(len(calendar)):
-        if calendar[i].stat == False:
-            bufor_list.append(i)
-        else:
-            calendar.remove(calendar[i])
-            status.remove(status[i])
-            checkbuttons.remove(checkbuttons[i])
-            checkbuttons[i].destroy()
-            textlist.remove(textlist[i])
-    calendar = bufor_list
-    display()
-    return calendar
-
+        if calendar[i].stat is not False:
+            bufor_calendar.append(i)
+            bufor_status.append(i)
+            bufor_checkbuttons.append(i)
+            bufor_textlist.append(i)
+        checkbuttons[i].destroy()
+    calendar = bufor_calendar
+    status = bufor_status
+    checkbuttons = bufor_checkbuttons
+    textlist = bufor_textlist
+    return calendar, status, checkbuttons, textlist
 
 def display():
     global calendar, textlist, status, checkbuttons
-
     def callback_on_checkbutton_click():
         print("One of the Checkbuttons clicked!")
         for i in range(len(calendar)):
             print('\tOld calendar[' + str(i) + '] state: ' + calendar[i].displayObj())
             calendar[i].stat = status[i].get()
             print('\t\tNew calendar[' + str(i) + '] state: ' + calendar[i].displayObj())
-
     checkbuttons.clear()
     for i in range(len(calendar)):
         lp = i + 1
