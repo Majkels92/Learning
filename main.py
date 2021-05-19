@@ -10,8 +10,8 @@ texts = []
 def config():
     global main_root, check_frame
     main_root = Tk()
-    main_root.title('To do list')
-    main_root.geometry("500x500")
+    main_root.title('Tasks to do')
+    main_root.geometry("600x600")
     button_frame = Frame(main_root)
     button_frame.grid(column=0, row=1)
     button_add_task = Button(button_frame, text='Add Task', width=12, command=add)
