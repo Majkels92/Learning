@@ -20,7 +20,7 @@ def config():
     button_delete_task.grid(column=0, row=1)
     button_delete_all_done = Button(button_frame, text='Delete All Done', width=12, command=del_all_done)
     button_delete_all_done.grid(column=0, row=2)
-    button_exit_app = Button(button_frame, text='EXIT', width=12, command=exit_window)
+    button_exit_app = Button(button_frame, text='Exit', width=12, command=exit_window)
     button_exit_app.grid(column=0, row=3)
     check_frame = Frame(main_root)
     check_frame.grid(column=1, row=1)
