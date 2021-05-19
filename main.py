@@ -8,11 +8,11 @@ texts = []
 
 
 def config():
-    global main_root, check_frame
-    main_root = Tk()
-    main_root.title('To do list')
-    main_root.geometry("500x500")
-    button_frame = Frame(main_root)
+    global base_root, check_frame
+    base_root = Tk()
+    base_root.title('To do list')
+    base_root.geometry("500x500")
+    button_frame = Frame(base_root)
     button_frame.grid(column=0, row=1)
     button_add_task = Button(button_frame, text='Add Task', width=12, command=add)
     button_add_task.grid(column=0, row=0)
@@ -22,7 +22,7 @@ def config():
     button_delete_all_done.grid(column=0, row=2)
     button_exit_app = Button(button_frame, text='Exit', width=12, command=exit_window)
     button_exit_app.grid(column=0, row=3)
-    check_frame = Frame(main_root)
+    check_frame = Frame(base_root)
     check_frame.grid(column=1, row=1)
 
 
@@ -127,7 +127,7 @@ def display():
 
     check_buttons.clear()
     check_frame.destroy()
-    check_frame = Frame(main_root)
+    check_frame = Frame(base_root)
     check_frame.grid(column=1, row=1)
     for i in range(len(calendar)):
         lp = i + 1
@@ -148,10 +148,10 @@ def display():
 
 
 def exit_window():
-    main_root.destroy()
+    base_root.destroy()
 
 
 if __name__ == '__main__':
     config()
-    main_root.mainloop()
+    base_root.mainloop()
 
