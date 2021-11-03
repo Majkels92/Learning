@@ -1,3 +1,5 @@
+import hangman_stage
+
 def gain_words_from_text(text_file):
     global pool_of_words
     with open(text_file, "r", encoding="UTF-8") as file:
@@ -10,3 +12,5 @@ def gain_words_from_text(text_file):
 
 gain_words_from_text("text.txt")
 print(pool_of_words)
+print(hangman_stage.stage_7)
+
