@@ -76,6 +76,11 @@ def menu():
         letter = input("\nPlease type a letter which u want to check if it is in hidden word: ")
         check_if_letter_in_word(letter)
         display_word_progress(display_string)
+        if "_" not in display_string:
+            print("""
+CONGRATULATIONS YOU WON !!!!
+!!!!!!WINNER WINNER CHICKEN DINNER!!!!!!!""")
+            break
 if __name__ == '__main__':
     print("""WANNA PLAY A GAME?\n\nRules are simple, guess the word and u will survive....\n\n""")
     gibbet_status = 0
