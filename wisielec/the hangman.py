@@ -46,6 +46,7 @@ def hangman_failure_status(): #controls stage of gibbet and prints it
         print(10 * "  GAME OVER !!!  ")
 
 def check_if_letter_in_word(picked_letter): #checking if typed leter is in game word
+    global gibbet_status
     if picked_letter in word_letters and picked_letter not in chosen_letters:
         print("CONGRATS WORD CONTAINS THAT LETTER")
         chosen_letters.append(picked_letter)
@@ -57,9 +58,11 @@ def check_if_letter_in_word(picked_letter): #checking if typed leter is in game 
     elif picked_letter in word_letters and picked_letter in chosen_letters:
         print("YOU ALREADY PICKED THIS LETTER")
     else:
+        print("NO MATCH FOUND :(")
         gibbet_status += 1
+        hangman_failure_status()
 
-def create_word_display(game_word): #creates default display of word
+def create_word_display(game_word): #creates default display list with lenght of game word
     word_display_list = []
     for d in range(len(game_word)):
         word_display_list.append("_")
@@ -68,18 +71,20 @@ def create_word_display(game_word): #creates default display of word
 def display_word_progress(word_progress): #display word with guessed letters
     print(" ".join(word_progress))
 
-"""def menu():
+def menu():
     while gibbet_status != 10:
         letter = input("\nPlease type a letter which u want to check if it is in hidden word: ")
-        if letter is in game_word"""
-
+        check_if_letter_in_word(letter)
+        display_word_progress(display_string)
 if __name__ == '__main__':
     print("""WANNA PLAY A GAME?\n\nRules are simple, guess the word and u will survive....\n\n""")
     gibbet_status = 0
     pool_of_words = gain_words_from_text("text.txt") #gain list of words from text
     game_word = draw_game_word_from_pool() #draw word from pool
     chosen_letters = []
-    display_string = create_word_display(game_word)
+    display_string = create_word_display(game_word) #creates display list
+    print(game_word)
+    menu()
 
 
 
