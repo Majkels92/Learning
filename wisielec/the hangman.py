@@ -53,7 +53,7 @@ def check_if_letter_in_word(picked_letter): #checking if typed leter is in game 
         counter = 0
         for i in word_letters:
             if i == picked_letter:
-                display_string[counter] == word_letters[counter]
+                display_string[counter] = word_letters[counter]
             counter +=1
     elif picked_letter in word_letters and picked_letter in chosen_letters:
         print("YOU ALREADY PICKED THIS LETTER")
