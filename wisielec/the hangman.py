@@ -1,5 +1,6 @@
 import hangman_stage
 import random
+import os
 
 
 def gain_words_from_text(text_file):  # gain list of words from text
@@ -50,7 +51,7 @@ def hangman_failure_status():  # controls stage of gibbet and prints it
         print(10 * "  GAME OVER !!!  ")
 
 
-def check_if_letter_in_word(picked_letter):  # checking if typed leter is in game word
+def check_if_letter_in_word(picked_letter):  # checking if typed letter is in game word
     global gibbet_status
     if picked_letter in word_letters and picked_letter not in chosen_letters:
         print("CONGRATS WORD CONTAINS THAT LETTER")
@@ -60,15 +61,21 @@ def check_if_letter_in_word(picked_letter):  # checking if typed leter is in gam
             if i == picked_letter:
                 display_string[counter] = word_letters[counter]
             counter += 1
-    elif picked_letter in word_letters and picked_letter in chosen_letters:
+    elif picked_letter in chosen_letters:
         print("YOU ALREADY PICKED THIS LETTER")
     else:
         print("NO MATCH FOUND :(")
+        chosen_letters.append(picked_letter)
+        counter = 0
+        for i in word_letters:
+            if i == picked_letter:
+                display_string[counter] = word_letters[counter]
+            counter += 1
         gibbet_status += 1
         hangman_failure_status()
 
 
-def create_word_display(word_for_length):  # creates default display list with lenght of game word
+def create_word_display(word_for_length):  # creates default display list with length of game word
     word_display_list = []
     for d in range(len(word_for_length)):
         word_display_list.append("_")
@@ -81,7 +88,7 @@ def display_word_progress(word_progress):  # display word with guessed letters
 
 def menu():
     while gibbet_status != 10:
-        letter = input("\nPlease type a letter which u want to check if it is in hidden word: ")
+        letter = str(input("\nPlease type a letter which u want to check if it is in hidden word: "))
         check_if_letter_in_word(letter)
         display_word_progress(display_string)
         if "_" not in display_string:
@@ -101,3 +108,5 @@ if __name__ == '__main__':
     display_word_progress(display_string)
     print(game_word)
     menu()
+    input("press any key to exit")
+    quit()
