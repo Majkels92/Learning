@@ -3,6 +3,10 @@ import random
 import os
 
 
+def clear():
+    os.system('cls')
+
+
 def gain_words_from_text(text_file):  # gain list of words from text
     global pool_of_words
     pool_of_words = []
@@ -54,7 +58,6 @@ def check_if_letter_in_word(picked_letter):  # checking if typed letter is in ga
                 display_string[counter] = word_letters[counter]
             counter += 1
         gibbet_status += 1
-        hangman_failure_status()
 
 
 def create_word_display(word_for_length):  # creates default display list with length of game word
@@ -71,8 +74,10 @@ def display_word_progress(word_progress):  # display word with guessed letters
 def menu():
     while gibbet_status != 10:
         letter = str(input("\nPlease type a letter which u want to check if it is in hidden word: "))
+        clear()
         check_if_letter_in_word(letter)
         display_word_progress(display_string)
+        hangman_failure_status()
         if "_" not in display_string:
             print("""
 CONGRATULATIONS YOU WON !!!!
