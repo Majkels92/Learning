@@ -26,29 +26,11 @@ def draw_game_word_from_pool():  # draw word from pool
 
 
 def hangman_failure_status():  # controls stage of gibbet and prints it
-    if gibbet_status == 0:
-        pass
-    elif gibbet_status == 1:
-        print(hangman_stage.stage_1)
-    elif gibbet_status == 2:
-        print(hangman_stage.stage_2)
-    elif gibbet_status == 3:
-        print(hangman_stage.stage_3)
-    elif gibbet_status == 4:
-        print(hangman_stage.stage_4)
-    elif gibbet_status == 5:
-        print(hangman_stage.stage_5)
-    elif gibbet_status == 6:
-        print(hangman_stage.stage_6)
-    elif gibbet_status == 7:
-        print(hangman_stage.stage_7)
-    elif gibbet_status == 8:
-        print(hangman_stage.stage_8)
-    elif gibbet_status == 9:
-        print(hangman_stage.stage_9)
-    elif gibbet_status == 10:
+    if gibbet_status == 10:
         print(hangman_stage.stage_10)
         print(10 * "  GAME OVER !!!  ")
+    else:
+        print(hangman_stage.stage_list[gibbet_status])
 
 
 def check_if_letter_in_word(picked_letter):  # checking if typed letter is in game word

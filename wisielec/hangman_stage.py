@@ -95,3 +95,5 @@ stage_1 = (r"""
 |	      
 |             
 """)
+empty_var = str()
+stage_list = [empty_var, stage_1, stage_2, stage_3, stage_4, stage_5, stage_6, stage_7, stage_8, stage_9, stage_10]
