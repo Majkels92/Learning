@@ -1,8 +1,8 @@
 import random
 
 
-def general_func_for_lotto(amount, totalamount):
-    random_list = random.sample(range(1, totalamount + 1), amount)
+def general_func_for_lotto(amount, total_amount):
+    random_list = random.sample(range(1, total_amount + 1), amount)
     print(random_list)
 
 
@@ -28,8 +28,27 @@ def system_4_mini():
             bet.append(x)
         bets.append(bet)
     for k in range(1, 9):
-        print(f"Lottery ticket number {'k'}:", bets[0])
+        print(f"Lottery ticket number {k}:", bets[0])
+
+def menu():
+
+    choice = input("""Choose your bet (type number):
+    1. Duże lotto
+    2. Mini lotto
+    3. System mini lotto
+    
+    I am choosing: """)
+    if choice == '1':
+        duze_lotto()
+    elif choice == '2':
+        mini_lotto()
+    elif choice == '3':
+        system_4_mini()
+    else:
+        print("Can't find function, try again: ")
+        menu()
+
 
 if __name__ == '__main__':
-    system_4_mini()
-    input("press any key to exit")
+    menu()
+    ending_program = input("press any key to exit")
