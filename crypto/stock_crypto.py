@@ -33,9 +33,10 @@ def downloading_data():
     return response, chosen_crypto_symbol, chosen_crypto_name, chosen_crypto_price
 
 def crypto_data_log():
-    with open("crypto price.txt", "a") as file:
-        response_time = None
-        file.write(f"{chosen_crypto_symbol}: {chosen_crypto_name} {float(chosen_crypto_price):.5f} [USD]\n")
+    with open("crypto log.txt", "a") as file:
+        response_time = datetime.datetime.now().strftime("%d.%m.%Yr. %H:%M:%S")
+        file.write(f"[{response_time}] {chosen_crypto_symbol}: {chosen_crypto_name} {float(chosen_crypto_price):.5f} "
+                   f"USD\n ")
 
 if __name__ == '__main__':
     downloading_data()
