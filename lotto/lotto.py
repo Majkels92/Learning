@@ -1,8 +1,8 @@
 import random
 
 
-def general_func_for_lotto(amount, totalAmount):
-    random_list = random.sample(range(1, totalAmount + 1), amount)
+def general_func_for_lotto(amount, totalamount):
+    random_list = random.sample(range(1, totalamount + 1), amount)
     print(random_list)
 
 
@@ -27,8 +27,9 @@ def system_4_mini():
             list_of_numbers.remove(x)
             bet.append(x)
         bets.append(bet)
-    for k in range(1,9):
+    for k in range(1, 9):
         print(f"Lottery ticket number {'k'}:", bets[0])
 
-
-system_4_mini()
+if __name__ == '__main__':
+    system_4_mini()
+    input("press any key to exit")
