@@ -32,14 +32,57 @@ def downloading_data():
     chosen_crypto_price = response["price"]
     return response, chosen_crypto_symbol, chosen_crypto_name, chosen_crypto_price
 
-def crypto_data_log():
+
+def appending_sought_item_to_list():
+    item = f"[{response_time}] {chosen_crypto_symbol}: {chosen_crypto_name} {float(chosen_crypto_price):.5f} "\
+           f"USD\n "
+    price_list.append(item)
+    return price_list
+
+
+def print_price():
+    downloading_data()
+    print(f"Price of {chosen_crypto_name} is {float(chosen_crypto_price):.5f} [USD]")
+    appending_sought_item_to_list()
+
+
+def available_cryptos():
+    print("""bitcoin\netherum\ndogecoin\nshibainu\nlitecoin""")
+
+
+def single_crypto_data_log():
+    global response_time
     with open("crypto log.txt", "a") as file:
         response_time = datetime.datetime.now().strftime("%d.%m.%Yr. %H:%M:%S")
         file.write(f"[{response_time}] {chosen_crypto_symbol}: {chosen_crypto_name} {float(chosen_crypto_price):.5f} "
                    f"USD\n ")
 
+
+def sought_crypto_data_log():
+    with open("crypto log.txt", "a") as file:
+        file.writelines(price_list)
+
+
+def menu():
+    global price_list
+    price_list = []
+    action = input("""what u want to do?")
+    - """)
+    if action == "check price":
+        print_price()
+    elif action == "create log":
+
+        print("\nFile with logs created.\n")
+    elif action == "save sought scores":
+        sought_crypto_data_log()
+    else:
+        print("Unknown action.")
+        menu()
+
+
 if __name__ == '__main__':
+    print("     Welcome to my CRYPTO App! :)")
     downloading_data()
-    crypto_data_log()
+
 
     input('Press ENTER to exit')
