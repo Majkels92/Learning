@@ -28,7 +28,7 @@ def system_4_mini():
             bet.append(x)
         bets.append(bet)
     for k in range(1, 9):
-        print(f"Lottery ticket number {k}:", bets[0])
+        print(f"Lottery ticket number {k}:", sorted(bets[k-1]))
 
 def menu():
 
