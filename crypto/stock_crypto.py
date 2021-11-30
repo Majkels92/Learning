@@ -9,7 +9,6 @@ def help_available_cryptos():
 
 def downloading_data():
     """Downloads from server chosen crypto data."""
-    global response, chosen_crypto_price, chosen_crypto_name, chosen_crypto_symbol
     cryptos = {
         'bitcoin': 'Qwsogvtv82FCd',
         'etherum': 'razxDUgYGNAdQ',
@@ -36,6 +35,7 @@ def downloading_data():
     chosen_crypto_symbol = response["symbol"]
     chosen_crypto_name = response["name"]
     chosen_crypto_price = response["price"]
+    return response, chosen_crypto_price, chosen_crypto_name, chosen_crypto_symbol
 
 
 def response_time_from_server():
@@ -49,14 +49,15 @@ def appending_sought_item_to_list():
     global price_list
     """Appends searched price of crypto to list as string."""
     response_time = response_time_from_server()
-    item = f"[{response_time}] {chosen_crypto_symbol}: {chosen_crypto_name} {float(chosen_crypto_price):.5f} "\
+    response, chosen_crypto_price, chosen_crypto_name, chosen_crypto_symbol = downloading_data()
+    item = f"[{response_time}] {chosen_crypto_symbol}: {chosen_crypto_name} {float(chosen_crypto_price):.5f} " \
            f"USD"
     price_list.append(item)
 
 
 def check_n_print_price():
     """Checks price of chosen crypto and appends that price to list to list"""
-    downloading_data()
+    response, chosen_crypto_price, chosen_crypto_name, chosen_crypto_symbol = downloading_data()
     print(f"Price of {chosen_crypto_name} is {float(chosen_crypto_price):.5f} [USD]")
     appending_sought_item_to_list()
 
@@ -64,6 +65,7 @@ def check_n_print_price():
 def single_crypto_data_log():
     """Appends or creates file crypto log.txt with history of checked prices, represented as every record in new line.
     Every line contains time:crypto symbol:crypto name:crypto price with 5 numbers after decimal."""
+    response, chosen_crypto_price, chosen_crypto_name, chosen_crypto_symbol = downloading_data()
     with open("crypto log.txt", "a") as file:
         response_time = response_time_from_server()
         file.write(f"[{response_time}] {chosen_crypto_symbol}: {chosen_crypto_name} {float(chosen_crypto_price):.5f} "
@@ -74,7 +76,7 @@ def sought_crypto_data_log():
     """Transfers elements from list to txt file, after transfer clears list."""
     with open("crypto log.txt", "a") as file:
         for item in price_list:
-            file.write(item+"\n")
+            file.write(item + "\n")
     price_list.clear()
 
 
@@ -100,11 +102,12 @@ def menu():
         print("Unknown action.")
         menu()
 
+
 price_list = []
 
 if __name__ == '__main__':
     print("     Welcome to my CRYPTO App! :)"
-    """what u want to do?")
+          """what u want to do?")
         - check price of crypto type: check price
         - to check available cryptos type: help
         - create or append data of crypto price do file type: create log
