@@ -1,35 +1,23 @@
 import random
+import validators
+
 
 class Creature:
     """Defines basic statistics of every creature and person in game."""
 
-    def __init__(self, hp = 100, mp = 100, spd = 1):
-        self.set_hp(hp)
-        self.set_mp(mp)
-        self.set_spd(spd)
+    def __init__(self, hp=100, mp=100, spd=1, name="John Doe"):
+        self._health_points = validators.validate_int_value(hp)
+        self._mana_points = validators.validate_int_value(mp)
+        self._speed = validators.validate_int_value(spd)
+        self._name = validators.validate_str_value(name)
 
-    def set_hp(self, hp):
-        if isinstance(hp, int) and hp > 0:
-            self.health_points = hp
-        else:
-            raise TypeError("Attribute must be integer and greater than 0.")
-
-    def set_mp(self, mp):
-        if isinstance(mp, int) and mp > 0:
-            self.mana_points = mp
-        else:
-            raise TypeError("Attribute must be integer and greater than 0.")
-
-    def set_spd(self, spd):
-        if isinstance(spd, int) and spd > 0:
-            self.speed = spd
-        else:
-            raise TypeError("Attribute must be integer and greater than 0.")
-
+    # show objects: health points, mana points and speed
     def show_creature_stats(self):
-        print(f"This subject has: \n{self.health_points} hp \n{self.mana_points} mp \n{self.speed} speed")
+        print(f"{self._name} has: \n{self._health_points} hp \n{self._mana_points} mp \n{self._speed} speed")
+
 
 class Weapons:
+    """Defines damage and attack speed of weapon"""
 
     def __init__(self):
         self.set_damage()
@@ -44,11 +32,6 @@ class Weapons:
     def show_weapon_stats(self):
         print(f"This weapon has: \n{self.damage} dmg\n{self.attack_speed} att spd")
 
+
 a = Creature(200, 300, 4)
 a.show_creature_stats()
-b = Weapons()
-b.show_weapon_stats()
-
-
-
-
