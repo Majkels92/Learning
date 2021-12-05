@@ -23,18 +23,31 @@ class Weapons:
         self._basic_damage = random.randint(1, 100)
         self._basic_attack_speed = Weapons.setting_att_speed()
 
-    # draw value of attack speed with weighted possibility
+    # draw value of basic attack speed with weighted possibility
     @staticmethod
     def setting_att_speed(att_spd_range=1):
-        """ Draw value of attack speed with weighted possibility (common = 60%, rare = 30%, legendary=10%);
+        """ Draw value of basic attack speed with weighted possibility (common = 60%, rare = 30%, legendary=10%);
         att_spd_range - attribute used for increasing possibility of better attack speed draw, used in Chest class"""
         possibility = random.randint(att_spd_range, 10)
         if possibility <= 6:
-            return (random.randrange(10, 51))/10
+            return (random.randrange(10, 50))/10
         elif possibility <= 9:
-            return (random.randrange(50, 81))/10
+            return (random.randrange(50, 80))/10
         else:
             return (random.randrange(80, 101))/10
+
+    # draw value of basic attack damage with weighted possibility
+    @staticmethod
+    def setting_dmg(dmg_range=1):
+        """ Draw value of basic damage with weighted possibility (common = 60%, rare = 30%, legendary=10%);
+        dmg_range - attribute used for increasing possibility of better attack speed draw, used in Chest class"""
+        possibility = random.randint(dmg_range, 10)
+        if possibility <= 6:
+            return random.randint(1, 50)
+        elif possibility <= 9:
+            return random.randint(51, 85)
+        else:
+            return random.randint(86, 100)
 
     # show instance: basic damage and attack speed
     def show_weapon_stats(self):
