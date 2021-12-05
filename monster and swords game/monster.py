@@ -20,7 +20,7 @@ class Weapons:
     """Defines damage and attack speed of weapon"""
 
     def __init__(self):
-        self._basic_damage = random.randint(1, 100)
+        self._basic_damage = Weapons.setting_dmg()
         self._basic_attack_speed = Weapons.setting_att_speed()
 
     # draw value of basic attack speed with weighted possibility
