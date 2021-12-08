@@ -61,6 +61,7 @@ class Weapons:
 
 
 class Chest:
+    """Creates Chest instance and defining its type and content"""
 
     def __init__(self):
         self.rarity = Chest.draw_rarity()
