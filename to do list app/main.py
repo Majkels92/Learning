@@ -154,4 +154,3 @@ def exit_window():
 if __name__ == '__main__':
     config()
     main_root.mainloop()
-
