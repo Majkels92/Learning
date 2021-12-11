@@ -96,15 +96,19 @@ class Chest:
         return drop
 
 
-class PlayerBackpack:
-    """Defines player backpack and number of available slots; __init__(self, slots=15)"""
+class Backpack:
+    """Defines backpack and number of available slots; __init__(self, slots=15)"""
 
-    def __init__(self, slots=15):
+    def __init__(self, owner, slots=15):
+        self._owner = owner._name
         self.backpack_slots = []
         self._basic_slots = validators.validate_int_value(slots)
         for slot in range(self._basic_slots):
             slot = "Empty slot"
             self.backpack_slots.append(slot)
+
+    def __repr__(self):
+        return f"This is PlayerBackPack class object. ID:{id(self)}"
 
     @property
     def slots(self):
