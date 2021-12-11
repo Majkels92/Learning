@@ -4,7 +4,8 @@ import validators
 
 
 class Creature:
-    """Defines basic statistics of every creature and person in game."""
+    """Defines basic statistics of every creature and person in game.;
+     _init__(self, hp=100, mp=100, m_spd=1, name="John Doe")"""
 
     def __init__(self, hp=100, mp=100, m_spd=1, name="John Doe"):
         self._health_points = validators.validate_int_value(hp)
@@ -96,7 +97,7 @@ class Chest:
 
 
 class PlayerBackpack:
-    """Defines player backpack and number of available slots"""
+    """Defines player backpack and number of available slots; __init__(self, slots=15)"""
 
     def __init__(self, slots=15):
         self.backpack_slots = []
@@ -115,10 +116,24 @@ class PlayerBackpack:
             self.backpack_slots.append("Empty slot")
 
 
-a = PlayerBackpack()
-print(a.slots)
-sword = Weapons()
-a.backpack_slots[1] = sword
-a.slot_extender(5)
-for i in a.backpack_slots:
-    print(i)
+class GoldSack:
+    """Creates sack for gold for chosen player, necessary name of owner as first argument.
+    _-init__(self, owner, gold_amount=0) """
+
+    def __init__(self, owner, gold_amount=0):
+        self._owner = owner._name
+        self.gold_amount = validators.validate_sack_value(gold_amount)
+
+    def __repr__(self):
+        return f"This is gold sack of {self._owner}"
+
+    # shows amount of gold
+    def check_gold_in_sack(self):
+        return f"In {self._owner} sack is {self.gold_amount} gold"
+
+
+player = Creature(name="Jacek Kopacz")
+player2 = Creature(name="Daro Wariat")
+sack = GoldSack(player2)
+print(sack)
+print(sack.check_gold_in_sack())
