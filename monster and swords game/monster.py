@@ -12,6 +12,9 @@ class Creature:
         self._movement_speed = validators.validate_int_value(m_spd)
         self._name = validators.validate_str_value(name)
 
+    def __repr__(self):
+        return f"This is Creature class object. ID:{id(self)}"
+
     # show instance: health points, mana points and speed
     def show_creature_stats(self):
         print(f"{self._name} has: \n{self._health_points} hp \n{self._mana_points} mp \n{self._movement_speed} "
@@ -24,6 +27,9 @@ class Weapons:
     def __init__(self):
         self._basic_damage = Weapons.setting_dmg()
         self._basic_attack_speed = Weapons.setting_att_speed()
+
+    def __repr__(self):
+        return f"This is Weapon class object. ID:{id(self)}"
 
     # draw value of basic attack speed with weighted possibility
     @staticmethod
@@ -89,14 +95,30 @@ class Chest:
         return drop
 
 
+class PlayerBackpack:
+    """Defines player backpack and number of available slots"""
+
+    def __init__(self, slots=15):
+        self.backpack_slots = []
+        self._basic_slots = validators.validate_int_value(slots)
+        for slot in range(self._basic_slots):
+            slot = "Empty slot"
+            self.backpack_slots.append(slot)
+
+    @property
+    def slots(self):
+        return self._basic_slots
+
+    # extends number of slots in players backpack
+    def slot_extender(self, additional_slot):
+        for new_slot in range(additional_slot):
+            self.backpack_slots.append("Empty slot")
 
 
-
-class ItemContainers:
-    pass
-
-
-a = Creature(200, 300, 4)
-a.show_creature_stats()
-w = Weapons()
-w.show_weapon_stats()
+a = PlayerBackpack()
+print(a.slots)
+sword = Weapons()
+a.backpack_slots[1] = sword
+a.slot_extender(5)
+for i in a.backpack_slots:
+    print(i)
