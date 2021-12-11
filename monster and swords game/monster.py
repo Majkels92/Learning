@@ -24,25 +24,25 @@ class Creature:
 
 class EasyMonster(Creature):
 
-    def __init__(self, hp=100, mp=100, evasion=1, name="Orc"):
+    def __init__(self, hp=random.randrange(100, 200), mp=100, evasion=1, name="Orc"):
         Creature.__init__(self, hp, mp, evasion, name)
 
 
 class MediumMonster(Creature):
 
-    def __init__(self, hp=100, mp=100, evasion=1, name="Orc Warrior"):
+    def __init__(self, hp=random.randrange(200, 300), mp=100, evasion=1, name="Orc Warrior"):
         Creature.__init__(self, hp, mp, evasion, name)
 
 
 class HardMonster(Creature):
 
-    def __init__(self, hp=100, mp=100, evasion=1, name="Orc Captain"):
+    def __init__(self, hp=random.randrange(300, 400), mp=100, evasion=1, name="Orc Captain"):
         Creature.__init__(self, hp, mp, evasion, name)
 
 
 class LegendaryMonster(Creature):
 
-    def __init__(self, hp=100, mp=100, evasion=1, name="Orc Leader"):
+    def __init__(self, hp=random.randrange(500, 600), mp=100, evasion=1, name="Orc Leader"):
         Creature.__init__(self, hp, mp, evasion, name)
 
 
