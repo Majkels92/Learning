@@ -7,10 +7,10 @@ class Creature:
     """Defines basic statistics of every creature and person in game.;
      _init__(self, hp=100, mp=100, m_spd=1, name="John Doe")"""
 
-    def __init__(self, hp=100, mp=100, m_spd=1, name="John Doe"):
+    def __init__(self, hp=100, mp=100, evasion=1, name="John Doe"):
         self._health_points = validators.validate_int_value(hp)
         self._mana_points = validators.validate_int_value(mp)
-        self._movement_speed = validators.validate_int_value(m_spd)
+        self._evasion = validators.validate_int_value(evasion)
         self._name = validators.validate_str_value(name)
 
     def __repr__(self):
@@ -18,8 +18,32 @@ class Creature:
 
     # show instance: health points, mana points and speed
     def show_creature_stats(self):
-        print(f"{self._name} has: \n{self._health_points} hp \n{self._mana_points} mp \n{self._movement_speed} "
-              f"movement speed")
+        print(f"{self._name} has: \n{self._health_points} hp \n{self._mana_points} mp \n{self._evasion} "
+              f"evasion")
+
+
+class EasyMonster(Creature):
+
+    def __init__(self, hp=100, mp=100, evasion=1, name="Orc"):
+        Creature.__init__(self, hp, mp, evasion, name)
+
+
+class MediumMonster(Creature):
+
+    def __init__(self, hp=100, mp=100, evasion=1, name="Orc Warrior"):
+        Creature.__init__(self, hp, mp, evasion, name)
+
+
+class HardMonster(Creature):
+
+    def __init__(self, hp=100, mp=100, evasion=1, name="Orc Captain"):
+        Creature.__init__(self, hp, mp, evasion, name)
+
+
+class LegendaryMonster(Creature):
+
+    def __init__(self, hp=100, mp=100, evasion=1, name="Orc Leader"):
+        Creature.__init__(self, hp, mp, evasion, name)
 
 
 class Weapons:
@@ -136,8 +160,5 @@ class GoldSack:
         return f"In {self._owner} sack is {self.gold_amount} gold"
 
 
-player = Creature(name="Jacek Kopacz")
-player2 = Creature(name="Daro Wariat")
-sack = GoldSack(player2)
-print(sack)
-print(sack.check_gold_in_sack())
+player = EasyMonster()
+player.show_creature_stats()
