@@ -22,6 +22,7 @@ class Creature:
               f"evasion")
 
 
+# inherited classes of monsters
 class EasyMonster(Creature):
 
     gained_experience = 100
@@ -74,6 +75,7 @@ class LegendaryMonster(Creature):
         return damage_output
 
 
+# ITEMS
 class Weapons:
     """Defines damage and attack speed of weapon"""
 
@@ -181,12 +183,46 @@ class GoldSack:
         self.gold_amount = validators.validate_sack_value(gold_amount)
 
     def __repr__(self):
-        return f"This is gold sack of {self._owner}"
+        return f"Sack of {self._owner} with {self.gold_amount} gold"
 
     # shows amount of gold
     def check_gold_in_sack(self):
         return f"In {self._owner} sack is {self.gold_amount} gold"
 
 
-player = EasyMonster()
-player.show_creature_stats()
+# ACTIONS
+class ActionsItems:
+    """Container of methods used for interactions with items: GoldSack, Backpack, Chest"""
+
+    # Gold Sack
+    def put_gold_into_sack(self):
+        pass
+
+    def withdraw_gold_from_sack(self):
+        pass
+
+    # Backpack
+    def put_item_into_backpack(self):
+        pass
+
+    def withdraw_item_from_backpack(self):
+        pass
+
+    # Chest
+    def open_chest(self):
+        pass
+
+
+class ActionsFight:
+    """Actions connected with fight"""
+
+    def attack(self):
+        pass
+
+    def evade_attack(self):
+        pass
+
+    def escape(self):
+        pass
+
+
