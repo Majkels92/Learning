@@ -28,6 +28,11 @@ class EasyMonster(Creature):
 
     def __init__(self, hp=random.randint(100, 200), mp=100, evasion=1, name="Orc"):
         Creature.__init__(self, hp, mp, evasion, name)
+        self.attack = 5
+
+    def damage_output(self):
+        damage_output = random.randint(self.attack, self.attack*2)
+        return damage_output
 
 
 class MediumMonster(Creature):
@@ -36,6 +41,11 @@ class MediumMonster(Creature):
 
     def __init__(self, hp=random.randint(200, 300), mp=100, evasion=1, name="Orc Warrior"):
         Creature.__init__(self, hp, mp, evasion, name)
+        self.attack = 10
+
+    def damage_output(self):
+        damage_output = random.randint(self.attack, self.attack*2)
+        return damage_output
 
 
 class HardMonster(Creature):
@@ -44,6 +54,11 @@ class HardMonster(Creature):
 
     def __init__(self, hp=random.randint(300, 400), mp=100, evasion=1, name="Orc Captain"):
         Creature.__init__(self, hp, mp, evasion, name)
+        self.attack = 20
+
+    def damage_output(self):
+        damage_output = random.randint(self.attack, self.attack*2)
+        return damage_output
 
 
 class LegendaryMonster(Creature):
@@ -52,6 +67,11 @@ class LegendaryMonster(Creature):
 
     def __init__(self, hp=random.randint(500, 600), mp=100, evasion=1, name="Orc Leader"):
         Creature.__init__(self, hp, mp, evasion, name)
+        self.attack = 40
+
+    def damage_output(self):
+        damage_output = random.randint(self.attack, self.attack*2)
+        return damage_output
 
 
 class Weapons:
