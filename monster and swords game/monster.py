@@ -191,26 +191,35 @@ class GoldSack:
 
 
 # ACTIONS
-class ActionsItems:
+class ActionsItems(GoldSack, Backpack, Chest):
     """Container of methods used for interactions with items: GoldSack, Backpack, Chest"""
 
     # Gold Sack
-    def put_gold_into_sack(self):
-        pass
+    def put_gold_into_sack(self, value):
+        self.gold_amount = self.gold_amount + value
 
-    def withdraw_gold_from_sack(self):
-        pass
+    def withdraw_gold_from_sack(self, value):
+        self.gold_amount = self.gold_amount - value
+        if self.gold_amount < 0:
+            self.gold_amount = 0
 
     # Backpack
-    def put_item_into_backpack(self):
-        pass
+    def put_item_into_backpack(self, item):
+        for item_slot in range(len(self.backpack_slots)):
+            if item_slot == "Empty slot":
+                self.backpack_slots[item_slot] = item
+            else:
+                print("No room in inventory")
 
-    def withdraw_item_from_backpack(self):
-        pass
+    def withdraw_item_from_backpack(self, slot_index):
+        for item_slot in range(len(self.backpack_slots)):
+            if (item_slot + 1) == slot_index:
+                self.backpack_slots[item_slot] = "Empty slot"
 
     # Chest
     def open_chest(self):
-        pass
+        gold_received = self.drop
+        self.put_gold_into_sack(gold_received)
 
 
 class ActionsFight:
@@ -224,5 +233,4 @@ class ActionsFight:
 
     def escape(self):
         pass
-
 
