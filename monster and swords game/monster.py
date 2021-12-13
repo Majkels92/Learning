@@ -83,9 +83,9 @@ class LegendaryMonster(Creature):
 class Weapons:
     """Defines damage and attack speed of weapon"""
 
-    def __init__(self):
-        self._basic_damage = Weapons.drawing_dmg()
-        self._basic_attack_speed = Weapons.drawing_att_speed()
+    def __init__(self, damage, attack_speed):
+        self._basic_damage = damage
+        self._basic_attack_speed = attack_speed
 
     def __repr__(self):
         return f"This is Weapon class object. ID:{id(self)}"
