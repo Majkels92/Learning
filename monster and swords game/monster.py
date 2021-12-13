@@ -80,15 +80,15 @@ class Weapons:
     """Defines damage and attack speed of weapon"""
 
     def __init__(self):
-        self._basic_damage = Weapons.setting_dmg()
-        self._basic_attack_speed = Weapons.setting_att_speed()
+        self._basic_damage = Weapons.drawing_dmg()
+        self._basic_attack_speed = Weapons.drawing_att_speed()
 
     def __repr__(self):
         return f"This is Weapon class object. ID:{id(self)}"
 
     # draw value of basic attack speed with weighted possibility
     @staticmethod
-    def setting_att_speed(att_spd_range=1):
+    def drawing_att_speed(att_spd_range=1):
         """ Draw value of basic attack speed with weighted possibility (common = 60%, rare = 30%, legendary=10%)
         att_spd_range - attribute used for increasing possibility of better attack speed draw, used in Chest class"""
         possibility = random.randint(att_spd_range, 10)
@@ -101,7 +101,7 @@ class Weapons:
 
     # draw value of basic attack damage with weighted possibility
     @staticmethod
-    def setting_dmg(dmg_range=1):
+    def drawing_dmg(dmg_range=1):
         """ Draw value of basic damage with weighted possibility (common = 60%, rare = 30%, legendary=10%);
 
         setting_dmg(dmg_range)
@@ -115,6 +115,9 @@ class Weapons:
             return random.randint(51, 85)
         else:
             return random.randint(86, 100)
+
+    def set_weapon_stats(self):
+        pass
 
     # show instance: basic damage and attack speed
     def show_weapon_stats(self):
@@ -150,6 +153,11 @@ class Chest:
         return drop
 
 
+    def open_chest(self, sack):
+        gold_received = self.drop
+        sack.put_gold_into_sack(gold_received)
+
+
 class Backpack:
     """Defines backpack and number of available slots; __init__(self, slots=15)"""
 
@@ -168,6 +176,21 @@ class Backpack:
     def slots(self):
         return self._basic_slots
 
+    # put item in first empty slot in backpack
+    def put_item_into_backpack(self, item):
+        for item_slot in range(len(self.backpack_slots)):
+            if item_slot == "Empty slot":
+                self.backpack_slots[item_slot] = item
+            else:
+                print("No room in inventory")
+
+    # withdraws from backpack item chosen by slot number
+    def withdraw_item_from_backpack(self, slot_index):
+        validators.validate_int_value_2(slot_index)
+        for item_slot in range(len(self.backpack_slots)):
+            if (item_slot + 1) == slot_index:
+                self.backpack_slots[item_slot] = "Empty slot"
+
     # extends number of slots in players backpack
     def slot_extender(self, additional_slot):
         for new_slot in range(additional_slot):
@@ -180,46 +203,24 @@ class GoldSack:
 
     def __init__(self, owner, gold_amount=0):
         self._owner = owner._name
-        self.gold_amount = validators.validate_sack_value(gold_amount)
+        self.gold_amount = validators.validate_int_value_2(gold_amount)
 
     def __repr__(self):
         return f"Sack of {self._owner} with {self.gold_amount} gold"
 
-    # shows amount of gold
-    def check_gold_in_sack(self):
-        return f"In {self._owner} sack is {self.gold_amount} gold"
-
-
-# ACTIONS
-class ActionsItems(GoldSack, Backpack, Chest):
-    """Container of methods used for interactions with items: GoldSack, Backpack, Chest"""
-
-    # Gold Sack
+    # add gold to sack
     def put_gold_into_sack(self, value):
         self.gold_amount = self.gold_amount + value
 
+    # withdraw gold from sack
     def withdraw_gold_from_sack(self, value):
         self.gold_amount = self.gold_amount - value
         if self.gold_amount < 0:
             self.gold_amount = 0
 
-    # Backpack
-    def put_item_into_backpack(self, item):
-        for item_slot in range(len(self.backpack_slots)):
-            if item_slot == "Empty slot":
-                self.backpack_slots[item_slot] = item
-            else:
-                print("No room in inventory")
-
-    def withdraw_item_from_backpack(self, slot_index):
-        for item_slot in range(len(self.backpack_slots)):
-            if (item_slot + 1) == slot_index:
-                self.backpack_slots[item_slot] = "Empty slot"
-
-    # Chest
-    def open_chest(self):
-        gold_received = self.drop
-        self.put_gold_into_sack(gold_received)
+    # shows amount of gold
+    def check_gold_in_sack(self):
+        return f"In {self._owner} sack is {self.gold_amount} gold"
 
 
 class ActionsFight:
@@ -234,3 +235,7 @@ class ActionsFight:
     def escape(self):
         pass
 
+"""michal = Creature(name = "Michal Skowronski")
+sack = GoldSack(michal)
+sack.put_gold_into_sack(20)
+print(sack.check_gold_in_sack())"""
