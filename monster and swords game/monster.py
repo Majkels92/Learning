@@ -26,6 +26,7 @@ class Creature:
 class EasyMonster(Creature):
 
     gained_experience = 100
+    EasyMonster_weapon = None
 
     def __init__(self, hp=random.randint(100, 200), mp=100, evasion=1, name="Orc"):
         Creature.__init__(self, hp, mp, evasion, name)
@@ -39,6 +40,7 @@ class EasyMonster(Creature):
 class MediumMonster(Creature):
 
     gained_experience = 200
+    MediumMonster_weapon = None
 
     def __init__(self, hp=random.randint(200, 300), mp=100, evasion=1, name="Orc Warrior"):
         Creature.__init__(self, hp, mp, evasion, name)
@@ -52,6 +54,7 @@ class MediumMonster(Creature):
 class HardMonster(Creature):
 
     gained_experience = 400
+    HardMonster_weapon = None
 
     def __init__(self, hp=random.randint(300, 400), mp=100, evasion=1, name="Orc Captain"):
         Creature.__init__(self, hp, mp, evasion, name)
@@ -65,6 +68,7 @@ class HardMonster(Creature):
 class LegendaryMonster(Creature):
 
     gained_experience = 1000
+    LegendaryMonster_weapon = None
 
     def __init__(self, hp=random.randint(500, 600), mp=100, evasion=1, name="Orc Leader"):
         Creature.__init__(self, hp, mp, evasion, name)
