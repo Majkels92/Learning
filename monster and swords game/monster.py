@@ -22,66 +22,8 @@ class Creature:
               f"evasion")
 
 
-# inherited classes of monsters
-class EasyMonster(Creature):
-
-    gained_experience = 100
-    EasyMonster_weapon = None
-
-    def __init__(self, hp=random.randint(100, 200), mp=100, evasion=1, name="Orc"):
-        Creature.__init__(self, hp, mp, evasion, name)
-        self.attack = 5
-
-    def damage_output(self):
-        damage_output = random.randint(self.attack, self.attack*2)
-        return damage_output
-
-
-class MediumMonster(Creature):
-
-    gained_experience = 200
-    MediumMonster_weapon = None
-
-    def __init__(self, hp=random.randint(200, 300), mp=100, evasion=1, name="Orc Warrior"):
-        Creature.__init__(self, hp, mp, evasion, name)
-        self.attack = 10
-
-    def damage_output(self):
-        damage_output = random.randint(self.attack, self.attack*2)
-        return damage_output
-
-
-class HardMonster(Creature):
-
-    gained_experience = 400
-    HardMonster_weapon = None
-
-    def __init__(self, hp=random.randint(300, 400), mp=100, evasion=1, name="Orc Captain"):
-        Creature.__init__(self, hp, mp, evasion, name)
-        self.attack = 20
-
-    def damage_output(self):
-        damage_output = random.randint(self.attack, self.attack*2)
-        return damage_output
-
-
-class LegendaryMonster(Creature):
-
-    gained_experience = 1000
-    LegendaryMonster_weapon = None
-
-    def __init__(self, hp=random.randint(500, 600), mp=100, evasion=1, name="Orc Leader"):
-        Creature.__init__(self, hp, mp, evasion, name)
-        self.attack = 40
-
-    def damage_output(self):
-        damage_output = random.randint(self.attack, self.attack*2)
-        return damage_output
-
-
-# ITEMS
 class Weapons:
-    """Defines damage and attack speed of weapon"""
+    """Defines damage and attack speed of weapon __init__(self, damage, attack_speed)"""
 
     def __init__(self, damage, attack_speed):
         self._basic_damage = damage
@@ -139,6 +81,63 @@ class Weapons:
     # show instance: basic damage and attack speed
     def show_weapon_stats(self):
         print(f"This weapon has: \n{self._basic_damage} dmg\n{self._basic_attack_speed} att spd")
+
+
+# inherited classes of monsters
+class EasyMonster(Creature):
+
+    gained_experience = 100
+    EasyMonster_weapon = Weapons(6, 1)
+
+    def __init__(self, hp=random.randint(100, 200), mp=100, evasion=1, name="Orc"):
+        Creature.__init__(self, hp, mp, evasion, name)
+        self.attack = 5
+
+    def damage_output(self):
+        damage_output = random.randint(self.attack, self.attack*2)
+        return damage_output
+
+
+class MediumMonster(Creature):
+
+    gained_experience = 200
+    MediumMonster_weapon = Weapons(15, 1)
+
+    def __init__(self, hp=random.randint(200, 300), mp=100, evasion=1, name="Orc Warrior"):
+        Creature.__init__(self, hp, mp, evasion, name)
+        self.attack = 10
+
+    def damage_output(self):
+        damage_output = random.randint(self.attack, self.attack*2)
+        return damage_output
+
+
+class HardMonster(Creature):
+
+    gained_experience = 400
+    HardMonster_weapon = Weapons(20, 2)
+
+    def __init__(self, hp=random.randint(300, 400), mp=100, evasion=1, name="Orc Captain"):
+        Creature.__init__(self, hp, mp, evasion, name)
+        self.attack = 20
+
+    def damage_output(self):
+        damage_output = random.randint(self.attack, self.attack*2)
+        return damage_output
+
+
+class LegendaryMonster(Creature):
+
+    gained_experience = 1000
+    LegendaryMonster_weapon = Weapons(35, 2)
+
+    def __init__(self, hp=random.randint(500, 600), mp=100, evasion=1, name="Orc Leader"):
+        Creature.__init__(self, hp, mp, evasion, name)
+        self.attack = 40
+
+    def damage_output(self):
+        damage_output = random.randint(self.attack, self.attack*2)
+        return damage_output
 
 
 class Chest:
