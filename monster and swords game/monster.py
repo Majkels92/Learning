@@ -90,12 +90,28 @@ class Weapons:
     def __repr__(self):
         return f"This is Weapon class object. ID:{id(self)}"
 
+    @property
+    def basic_damage(self):
+        return self._basic_damage
+
+    @basic_damage.setter
+    def basic_damage(self, value):
+        self._basic_damage = value
+
+    @property
+    def basic_attack_speed(self):
+        return self._basic_attack_speed
+
+    @basic_attack_speed.setter
+    def basic_attack_speed(self, value):
+        self._basic_attack_speed = value
+
     # draw value of basic attack speed with weighted possibility
     @staticmethod
-    def drawing_att_speed(att_spd_range=1):
+    def drawing_att_speed_value(att_spd_range_min=1, att_spd_range_max=10):
         """ Draw value of basic attack speed with weighted possibility (common = 60%, rare = 30%, legendary=10%)
         att_spd_range - attribute used for increasing possibility of better attack speed draw, used in Chest class"""
-        possibility = random.randint(att_spd_range, 10)
+        possibility = random.randint(att_spd_range_min, att_spd_range_max)
         if possibility <= 6:
             return (random.randrange(10, 50))/10
         elif possibility <= 9:
@@ -105,23 +121,20 @@ class Weapons:
 
     # draw value of basic attack damage with weighted possibility
     @staticmethod
-    def drawing_dmg(dmg_range=1):
+    def drawing_dmg_value(dmg_range_min=1, dmg_range_max=10):
         """ Draw value of basic damage with weighted possibility (common = 60%, rare = 30%, legendary=10%);
 
         setting_dmg(dmg_range)
         dmg_range: default value = 1
 
         dmg_range - attribute used for increasing possibility of better attack speed draw, used in Chest class"""
-        possibility = random.randint(dmg_range, 10)
+        possibility = random.randint(dmg_range_min, dmg_range_max)
         if possibility <= 6:
             return random.randint(1, 50)
         elif possibility <= 9:
             return random.randint(51, 85)
         else:
             return random.randint(86, 100)
-
-    def set_weapon_stats(self):
-        pass
 
     # show instance: basic damage and attack speed
     def show_weapon_stats(self):
@@ -155,7 +168,6 @@ class Chest:
         elif self.rarity == "wooden":
             drop = 10
         return drop
-
 
     def open_chest(self, sack):
         gold_received = self.drop
@@ -238,6 +250,7 @@ class ActionsFight:
 
     def escape(self):
         pass
+
 
 """michal = Creature(name = "Michal Skowronski")
 sack = GoldSack(michal)
