@@ -12,6 +12,7 @@ class Creature:
         self._mana_points = validators.validate_int_value(mp)
         self._evasion = validators.validate_int_value(evasion)
         self._name = validators.validate_str_value(name)
+        self.weapon = None
 
     def __repr__(self):
         return f"This is Creature class object. ID:{id(self)}"
@@ -26,8 +27,9 @@ class Weapons:
     """Defines damage and attack speed of weapon __init__(self, damage, attack_speed)"""
 
     def __init__(self, damage, attack_speed):
-        self._basic_damage = damage
-        self._basic_attack_speed = attack_speed
+        self._basic_damage = validators.validate_int_weapon_dmg_value(damage)
+        self._attack_speed = validators.validate_float_weapon_dmg_value(attack_speed)
+        self.additional_damage = 0
 
     def __repr__(self):
         return f"This is Weapon class object. ID:{id(self)}"
@@ -42,35 +44,35 @@ class Weapons:
 
     @property
     def basic_attack_speed(self):
-        return self._basic_attack_speed
+        return self._attack_speed
 
     @basic_attack_speed.setter
     def basic_attack_speed(self, value):
-        self._basic_attack_speed = value
+        self._attack_speed = value
 
     # draw value of basic attack speed with weighted possibility
     @staticmethod
-    def drawing_att_speed_value(att_spd_range_min=1, att_spd_range_max=10):
+    def drawing_att_speed_value(att_spd_possibility_min=1, att_spd_possibility_max=10):
         """ Draw value of basic attack speed with weighted possibility (common = 60%, rare = 30%, legendary=10%)
         att_spd_range - attribute used for increasing possibility of better attack speed draw, used in Chest class"""
-        possibility = random.randint(att_spd_range_min, att_spd_range_max)
+        possibility = random.randint(att_spd_possibility_min, att_spd_possibility_max)
         if possibility <= 6:
-            return (random.randrange(10, 50))/10
+            return round(random.uniform(1, 2.5), 1)
         elif possibility <= 9:
-            return (random.randrange(50, 80))/10
+            return round(random.uniform(2.5, 3.5), 1)
         else:
-            return (random.randrange(80, 101))/10
+            return round(random.uniform(3.5, 4), 1)
 
     # draw value of basic attack damage with weighted possibility
     @staticmethod
-    def drawing_dmg_value(dmg_range_min=1, dmg_range_max=10):
+    def drawing_dmg_value(damage_possibility_min=1, damage_possibility_max=10):
         """ Draw value of basic damage with weighted possibility (common = 60%, rare = 30%, legendary=10%);
 
         setting_dmg(dmg_range)
         dmg_range: default value = 1
 
         dmg_range - attribute used for increasing possibility of better attack speed draw, used in Chest class"""
-        possibility = random.randint(dmg_range_min, dmg_range_max)
+        possibility = random.randint(damage_possibility_min, damage_possibility_max)
         if possibility <= 6:
             return random.randint(1, 50)
         elif possibility <= 9:
@@ -78,12 +80,16 @@ class Weapons:
         else:
             return random.randint(86, 100)
 
+    def damage_output(self):
+        weapon_damage = self._basic_damage + self.additional_damage
+        attack = weapon_damage * round(random.uniform(-0.4, 0.4), 1)
+        return attack
+
     # show instance: basic damage and attack speed
     def show_weapon_stats(self):
-        print(f"This weapon has: \n{self._basic_damage} dmg\n{self._basic_attack_speed} att spd")
+        print(f"This weapon has: \n{self._basic_damage} dmg\n{self._attack_speed} att spd")
 
 
-# inherited classes of monsters
 class EasyMonster(Creature):
 
     gained_experience = 100
@@ -92,10 +98,6 @@ class EasyMonster(Creature):
     def __init__(self, hp=random.randint(100, 200), mp=100, evasion=1, name="Orc"):
         Creature.__init__(self, hp, mp, evasion, name)
         self.attack = 5
-
-    def damage_output(self):
-        damage_output = random.randint(self.attack, self.attack*2)
-        return damage_output
 
 
 class MediumMonster(Creature):
@@ -107,10 +109,6 @@ class MediumMonster(Creature):
         Creature.__init__(self, hp, mp, evasion, name)
         self.attack = 10
 
-    def damage_output(self):
-        damage_output = random.randint(self.attack, self.attack*2)
-        return damage_output
-
 
 class HardMonster(Creature):
 
@@ -121,10 +119,6 @@ class HardMonster(Creature):
         Creature.__init__(self, hp, mp, evasion, name)
         self.attack = 20
 
-    def damage_output(self):
-        damage_output = random.randint(self.attack, self.attack*2)
-        return damage_output
-
 
 class LegendaryMonster(Creature):
 
@@ -134,10 +128,6 @@ class LegendaryMonster(Creature):
     def __init__(self, hp=random.randint(500, 600), mp=100, evasion=1, name="Orc Leader"):
         Creature.__init__(self, hp, mp, evasion, name)
         self.attack = 40
-
-    def damage_output(self):
-        damage_output = random.randint(self.attack, self.attack*2)
-        return damage_output
 
 
 class Chest:
@@ -241,14 +231,23 @@ class GoldSack:
 class ActionsFight:
     """Actions connected with fight"""
 
-    def attack(self):
-        pass
+    @staticmethod
+    def attack(weapon):
+        hit = weapon.damage_output()
+        multiplier = weapon._attack_speed
+        hp_loss = hit*multiplier  # damage from attack
+        return hp_loss
 
-    def evade_attack(self):
-        pass
+    @staticmethod
+    def evade_attack(character):
+        chance_to_evade = character.evasion/100
+        result = round(random.uniform(0, 1), 2)
+        if chance_to_evade >= result:
+            evade = True
+        else:
+            evade = False
+        return evade
 
-    def escape(self):
-        pass
 
 
 """michal = Creature(name = "Michal Skowronski")
