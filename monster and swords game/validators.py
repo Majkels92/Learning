@@ -28,7 +28,7 @@ def validate_int_value_2(int_value):
 # validates value of weapon damage
 def validate_int_weapon_dmg_value(int_value):
     """Must be int and 0 < int_value <= 100"""
-    if isinstance(int_value, float) and 0 < int_value <= 100:
+    if isinstance(int_value, int) and 0 < int_value <= 100:
         return int_value
     else:
         if not isinstance(int_value, int):
@@ -38,7 +38,7 @@ def validate_int_weapon_dmg_value(int_value):
 
 
 # validates float value of weapon attack speed
-def validate_float_weapon_dmg_value(float_value):
+def validate_float_weapon_att_spd_value(float_value):
     """Must be float value and 1.0 < int_value <= 4.0"""
     if isinstance(float_value, float) and 1 < float_value <= 4:
         return float_value

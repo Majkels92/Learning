@@ -1,6 +1,7 @@
 """File containing code defining game content such as characters, items etc...."""
 import random
 import validators
+import time
 
 
 class Creature:
@@ -13,6 +14,7 @@ class Creature:
         self._evasion = validators.validate_int_value(evasion)
         self._name = validators.validate_str_value(name)
         self.weapon = None
+        self.alive = True
 
     def __repr__(self):
         return f"This is Creature class object. ID:{id(self)}"
@@ -28,7 +30,7 @@ class Weapons:
 
     def __init__(self, damage, attack_speed):
         self._basic_damage = validators.validate_int_weapon_dmg_value(damage)
-        self._attack_speed = validators.validate_float_weapon_dmg_value(attack_speed)
+        self._attack_speed = validators.validate_float_weapon_att_spd_value(attack_speed)
         self.additional_damage = 0
 
     def __repr__(self):
@@ -97,7 +99,7 @@ class EasyMonster(Creature):
 
     def __init__(self, hp=random.randint(100, 200), mp=100, evasion=1, name="Orc"):
         Creature.__init__(self, hp, mp, evasion, name)
-        self.attack = 5
+        self.weapon = EasyMonster.EasyMonster_weapon
 
 
 class MediumMonster(Creature):
@@ -107,7 +109,7 @@ class MediumMonster(Creature):
 
     def __init__(self, hp=random.randint(200, 300), mp=100, evasion=1, name="Orc Warrior"):
         Creature.__init__(self, hp, mp, evasion, name)
-        self.attack = 10
+        self.weapon = MediumMonster.MediumMonster_weapon
 
 
 class HardMonster(Creature):
@@ -117,7 +119,7 @@ class HardMonster(Creature):
 
     def __init__(self, hp=random.randint(300, 400), mp=100, evasion=1, name="Orc Captain"):
         Creature.__init__(self, hp, mp, evasion, name)
-        self.attack = 20
+        self.weapon = HardMonster.HardMonster_weapon
 
 
 class LegendaryMonster(Creature):
@@ -127,7 +129,7 @@ class LegendaryMonster(Creature):
 
     def __init__(self, hp=random.randint(500, 600), mp=100, evasion=1, name="Orc Leader"):
         Creature.__init__(self, hp, mp, evasion, name)
-        self.attack = 40
+        self.weapon = LegendaryMonster.LegendaryMonster_weapon
 
 
 class Chest:
@@ -249,8 +251,36 @@ class ActionsFight:
         return evade
 
 
+class Fight:
 
-"""michal = Creature(name = "Michal Skowronski")
-sack = GoldSack(michal)
-sack.put_gold_into_sack(20)
-print(sack.check_gold_in_sack())"""
+    @staticmethod
+    def fight(player, enemy):
+        player_hp = player._health_points
+        enemy_hp = enemy._health_points
+        print("FIGHT BEGINS:")
+        time.sleep(1)
+        while player.alive is True or enemy.alive is True:
+            hit = ActionsFight.attack(player.weapon)
+            print(f"You hit for {hit} hp")
+            enemy_hp = enemy_hp - hit
+            print(f"Your enemy has {enemy_hp} left.")
+            if enemy_hp <= 0:
+                enemy.alive = False
+                break
+            hit = ActionsFight.attack(enemy.weapon)
+            player_hp = player_hp - hit
+            if player_hp <= 0:
+                player.alive = False
+                break
+        if player.alive is False:
+            print("You died")
+        else:
+            print("You won fight!")
+
+
+"""michal = Creature(name="Michal Skowronski")
+michal.weapon = Weapons(20, 2)
+orc = EasyMonster()
+Fight.fight(michal, orc)
+"""
+wep = Weapons(6, 1.0)
