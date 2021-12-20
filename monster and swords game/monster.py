@@ -286,3 +286,10 @@ class Fight:
             print("You died")
         else:
             print("You won fight!")
+
+
+class Actions:
+
+    @staticmethod
+    def loot_gold(looted_obj, player_sack):
+        player_sack.GoldSack.put_gold_into_sack(looted_obj.gold_drop)
