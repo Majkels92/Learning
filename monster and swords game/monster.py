@@ -96,6 +96,7 @@ class EasyMonster(Creature):
 
     gained_experience = 100
     EasyMonster_weapon = Weapons(6, 1)
+    gold_drop = random.randint(10, 20)
 
     def __init__(self, hp=random.randint(100, 200), mp=100, evasion=1, name="Orc"):
         Creature.__init__(self, hp, mp, evasion, name)
@@ -106,6 +107,7 @@ class MediumMonster(Creature):
 
     gained_experience = 200
     MediumMonster_weapon = Weapons(15, 1)
+    gold_drop = random.randint(10, 30)
 
     def __init__(self, hp=random.randint(200, 300), mp=100, evasion=1, name="Orc Warrior"):
         Creature.__init__(self, hp, mp, evasion, name)
@@ -116,6 +118,7 @@ class HardMonster(Creature):
 
     gained_experience = 400
     HardMonster_weapon = Weapons(20, 2)
+    gold_drop = random.randint(20, 40)
 
     def __init__(self, hp=random.randint(300, 400), mp=100, evasion=1, name="Orc Captain"):
         Creature.__init__(self, hp, mp, evasion, name)
@@ -126,6 +129,7 @@ class LegendaryMonster(Creature):
 
     gained_experience = 1000
     LegendaryMonster_weapon = Weapons(35, 2)
+    gold_drop = random.randint(50, 120)
 
     def __init__(self, hp=random.randint(500, 600), mp=100, evasion=1, name="Orc Leader"):
         Creature.__init__(self, hp, mp, evasion, name)
@@ -282,4 +286,3 @@ class Fight:
             print("You died")
         else:
             print("You won fight!")
-
