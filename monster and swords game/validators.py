@@ -38,15 +38,19 @@ def validate_int_weapon_dmg_value(int_value):
 
 
 # validates float value of weapon attack speed
-def validate_float_weapon_att_spd_value(float_value):
+def validate_float_weapon_att_spd_value(number_value):
     """Must be float value and 1.0 < int_value <= 4.0"""
-    if isinstance(float_value, float) and 1 < float_value <= 4:
+    if isinstance(number_value, int):
+        float_value = float(number_value)
+    else:
+        float_value = number_value
+    if isinstance(float_value, float) and 1 <= float_value <= 4:
         return float_value
     else:
         if not isinstance(float_value, float):
             raise TypeError("Attribute must be integer type.")
         elif 1 < float_value <= 4:
-            raise ValueError("Attribute must be greater than 0 and lower or equal of 100.")
+            raise ValueError("Attribute must be greater or equal than 1 and lower or equal of 4.")
 
 
 # validate input value, value must be STR type

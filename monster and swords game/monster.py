@@ -277,10 +277,3 @@ class Fight:
         else:
             print("You won fight!")
 
-
-"""michal = Creature(name="Michal Skowronski")
-michal.weapon = Weapons(20, 2)
-orc = EasyMonster()
-Fight.fight(michal, orc)
-"""
-wep = Weapons(6, 1.0)
