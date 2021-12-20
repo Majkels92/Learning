@@ -1,6 +1,7 @@
 from monster import *
 
-michal = Creature(name="Michal Skowronski")
-michal.weapon = Weapons(20, 2.0)
-orc = EasyMonster()
-Fight.fight(michal, orc)
+michal = Creature(name="Michal Skowronski")  # creates player
+michal.weapon = Weapons(20, 2.0)  # adds weapon for player
+orc = EasyMonster()  # creates monster
+Fight.fight(michal, orc, player_sack)
+print(player_sack.check_gold_in_sack())

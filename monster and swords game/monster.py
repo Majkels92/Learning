@@ -11,7 +11,7 @@ class Creature:
     def __init__(self, hp=100, mp=100, evasion=1, name="John Doe"):
         self._health_points = validators.validate_int_value(hp)
         self._mana_points = validators.validate_int_value(mp)
-        self._evasion = validators.validate_int_value(evasion)
+        self.evasion = validators.validate_int_value(evasion)
         self._name = validators.validate_str_value(name)
         self.weapon = None
         self.alive = True
@@ -21,7 +21,7 @@ class Creature:
 
     # show instance: health points, mana points and speed
     def show_creature_stats(self):
-        print(f"{self._name} has: \n{self._health_points} hp \n{self._mana_points} mp \n{self._evasion} "
+        print(f"{self._name} has: \n{self._health_points} hp \n{self._mana_points} mp \n{self.evasion} "
               f"evasion")
 
 
@@ -255,10 +255,23 @@ class ActionsFight:
         return evade
 
 
+class Actions:
+
+    # method transferring dropped gold from beaten enemy to chosen sack (usually player's)
+    @staticmethod
+    def loot_gold(looted_obj, profit_sack):
+        profit_sack.put_gold_into_sack(looted_obj.gold_drop)
+
+
 class Fight:
 
     @staticmethod
-    def fight(player, enemy):
+    def evading_attack(player, enemy):
+        pass
+
+    # method simulating fight, if player win fight, gives him dropped gold from nemesis
+    @staticmethod
+    def fight(player, enemy, player_sack):
         player_hp = player._health_points
         enemy_hp = enemy._health_points
         print("FIGHT BEGINS:")
@@ -286,10 +299,4 @@ class Fight:
             print("You died")
         else:
             print("You won fight!")
-
-
-class Actions:
-
-    @staticmethod
-    def loot_gold(looted_obj, player_sack):
-        player_sack.GoldSack.put_gold_into_sack(looted_obj.gold_drop)
+            Actions.loot_gold(enemy, player_sack)
