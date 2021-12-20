@@ -238,7 +238,7 @@ class ActionsFight:
         hit = weapon.damage_output()
         multiplier = weapon._attack_speed
         hp_loss = hit*multiplier  # damage from attack
-        return hp_loss
+        return int(hp_loss)
 
     @staticmethod
     def evade_attack(character):
