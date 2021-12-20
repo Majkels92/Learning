@@ -84,7 +84,7 @@ class Weapons:
 
     def damage_output(self):
         weapon_damage = self._basic_damage + self.additional_damage
-        attack = weapon_damage * round(random.uniform(-0.4, 0.4), 1)
+        attack = weapon_damage + weapon_damage * round(random.uniform(-0.4, 0.4), 1)
         return attack
 
     # show instance: basic damage and attack speed
@@ -263,12 +263,18 @@ class Fight:
             hit = ActionsFight.attack(player.weapon)
             print(f"You hit for {hit} hp")
             enemy_hp = enemy_hp - hit
-            print(f"Your enemy has {enemy_hp} left.")
+            time.sleep(0.3)
+            print(f"ENEMY has {enemy_hp} left.")
+            time.sleep(1)
             if enemy_hp <= 0:
                 enemy.alive = False
                 break
             hit = ActionsFight.attack(enemy.weapon)
+            print(f"Enemy hit for {hit} hp")
             player_hp = player_hp - hit
+            time.sleep(0.3)
+            print(f"YOU have {player_hp} left.")
+            time.sleep(1)
             if player_hp <= 0:
                 player.alive = False
                 break
