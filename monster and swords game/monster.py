@@ -146,13 +146,9 @@ class Chest:
     # draws and set rarity of chest
     @staticmethod
     def draw_rarity():
-        chest_rarity = random.randint(1, 10)
-        if chest_rarity <= 6:
-            return "wooden"
-        elif chest_rarity <= 9:
-            return "iron"
-        else:
-            return "golden"
+        chest_type = ["wooden", "iron", "golden"]
+        draw_chest_type = random.choices(chest_type, [70, 25, 5])
+        return draw_chest_type
 
     # draws amount of gold dropped from chest
     def chest_gold_drop(self):
@@ -257,7 +253,7 @@ class ActionsFight:
 
 class Actions:
 
-    # method transferring dropped gold from beaten enemy to chosen sack (usually player's)
+    # method transferring dropped gold from beaten enemy or opened chest to chosen sack (usually player's)
     @staticmethod
     def loot_gold(looted_obj, profit_sack):
         profit_sack.put_gold_into_sack(looted_obj.gold_drop)
