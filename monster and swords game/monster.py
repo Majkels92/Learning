@@ -102,59 +102,14 @@ class Weapons:
         print(f"This weapon has: \n{self._basic_damage} dmg\n{self._attack_speed} att spd")
 
 
-class EasyMonster(Creature):
-
-    gained_experience = 100
-    EasyMonster_weapon = Weapons(6, 1)
-    gold_drop = random.randint(10, 20)
-
-    def __init__(self, name="Orc", hp=random.randint(100, 200), mp=100, evasion=1):
-        Creature.__init__(self, name, hp, mp, evasion)
-        self.weapon_in_hand = EasyMonster.EasyMonster_weapon
-        self.player_basic_attack = 2
-
-
-class MediumMonster(Creature):
-
-    gained_experience = 200
-    MediumMonster_weapon = Weapons(15, 1)
-    gold_drop = random.randint(10, 30)
-
-    def __init__(self, name="Orc Warrior", hp=random.randint(200, 300), mp=100, evasion=1):
-        Creature.__init__(self, name, hp, mp, evasion)
-        self.weapon_in_hand = MediumMonster.MediumMonster_weapon
-        self.player_basic_attack = 5
-
-
-class HardMonster(Creature):
-
-    gained_experience = 400
-    HardMonster_weapon = Weapons(20, 2)
-    gold_drop = random.randint(20, 40)
-
-    def __init__(self, name="Orc Captain", hp=random.randint(300, 400), mp=100, evasion=1):
-        Creature.__init__(self, name, hp, mp, evasion)
-        self.weapon_in_hand = HardMonster.HardMonster_weapon
-        self.player_basic_attack = 10
-
-
-class LegendaryMonster(Creature):
-
-    gained_experience = 1000
-    LegendaryMonster_weapon = Weapons(35, 2)
-    gold_drop = random.randint(50, 120)
-
-    def __init__(self, name="Orc Leader", hp=random.randint(500, 600), mp=100, evasion=1):
-        Creature.__init__(self, name, hp, mp, evasion)
-        self.weapon_in_hand = LegendaryMonster.LegendaryMonster_weapon
-        self.player_basic_attack = 20
-
-
 class Chest:
-    """Creates Chest instance and defining its type and content"""
+    """Creates Chest instance and defining its type and content, __init__(self, rarity=None) if None draws rarity"""
 
-    def __init__(self):
-        self.rarity = Chest.draw_rarity()
+    def __init__(self, rarity=None):
+        if rarity is None:
+            self.rarity = Chest.draw_rarity()
+        else:
+            self.rarity = rarity
         self.gold_drop = self.chest_gold_drop()
 
     def __repr__(self):
@@ -181,6 +136,57 @@ class Chest:
     def open_chest(self, sack):
         gold_received = self.gold_drop
         sack.put_gold_into_sack(gold_received)
+
+
+class EasyMonster(Creature):
+
+    gained_experience = 100
+    EasyMonster_weapon = Weapons(6, 1)
+    gold_drop = random.randint(10, 20)
+
+    def __init__(self, name="Orc", hp=random.randint(100, 200), mp=100, evasion=1):
+        Creature.__init__(self, name, hp, mp, evasion)
+        self.weapon_in_hand = EasyMonster.EasyMonster_weapon
+        self.player_basic_attack = 2
+
+
+class MediumMonster(Creature):
+
+    gained_experience = 200
+    MediumMonster_weapon = Weapons(15, 1)
+    gold_drop = random.randint(10, 30)
+    chest_drop = Chest("wooden")
+
+    def __init__(self, name="Orc Warrior", hp=random.randint(200, 300), mp=100, evasion=1):
+        Creature.__init__(self, name, hp, mp, evasion)
+        self.weapon_in_hand = MediumMonster.MediumMonster_weapon
+        self.player_basic_attack = 5
+
+
+class HardMonster(Creature):
+
+    gained_experience = 400
+    HardMonster_weapon = Weapons(20, 2)
+    gold_drop = random.randint(20, 40)
+    chest_drop = Chest()
+
+    def __init__(self, name="Orc Captain", hp=random.randint(300, 400), mp=100, evasion=1):
+        Creature.__init__(self, name, hp, mp, evasion)
+        self.weapon_in_hand = HardMonster.HardMonster_weapon
+        self.player_basic_attack = 10
+
+
+class LegendaryMonster(Creature):
+
+    gained_experience = 1000
+    LegendaryMonster_weapon = Weapons(35, 2)
+    gold_drop = random.randint(50, 120)
+    chest_drop = Chest()
+
+    def __init__(self, name="Orc Leader", hp=random.randint(500, 600), mp=100, evasion=1):
+        Creature.__init__(self, name, hp, mp, evasion)
+        self.weapon_in_hand = LegendaryMonster.LegendaryMonster_weapon
+        self.player_basic_attack = 20
 
 
 class Backpack:
@@ -275,6 +281,14 @@ class Actions:
     @staticmethod
     def loot_gold(looted_obj, profit_sack):
         profit_sack.put_gold_into_sack(looted_obj.gold_drop)
+
+    @staticmethod
+    def loot_chest(chest_source, player_sack):
+        chest_source.open_chest(player_sack)
+
+    @staticmethod
+    def gain_experience(player, experience_source):
+        player.experience += experience_source.gained_experience
 
 
 class Fight:
