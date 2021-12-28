@@ -6,18 +6,28 @@ import time
 
 class Creature:
     """Defines basic statistics of every creature and person in game.;
-     _init__(self, hp=100, mp=100, m_spd=1, name="John Doe")"""
+     _init__(self, name="John Doe", hp=100, mp=100, m_spd=1)"""
 
-    def __init__(self, hp=100, mp=100, evasion=1, name="John Doe"):
+    def __init__(self, name="John Doe", hp=100, mp=100, evasion=1):
         self._health_points = validators.validate_int_value(hp)
         self._mana_points = validators.validate_int_value(mp)
         self.evasion = validators.validate_int_value(evasion)
         self._name = validators.validate_str_value(name)
-        self.weapon = None
+        self.weapon_in_hand = None
         self.alive = True
+        self.experience = 0
+        self.level = 1
+        self.strength = 10
+        self.player_basic_attack = self.strength
 
     def __repr__(self):
         return f"This is Creature class object. ID:{id(self)}"
+
+    def leveling_method(self):
+        experience_needed = self.level*200 + 800
+        if self.experience >= experience_needed:
+            self.level += 1
+            self.strength += 2
 
     # show instance: health points, mana points and speed
     def show_creature_stats(self):
@@ -82,7 +92,7 @@ class Weapons:
         else:
             return random.randint(86, 100)
 
-    def damage_output(self):
+    def weapon_damage_output(self):
         weapon_damage = self._basic_damage + self.additional_damage
         attack = weapon_damage + weapon_damage * round(random.uniform(-0.4, 0.4), 1)
         return attack
@@ -98,9 +108,10 @@ class EasyMonster(Creature):
     EasyMonster_weapon = Weapons(6, 1)
     gold_drop = random.randint(10, 20)
 
-    def __init__(self, hp=random.randint(100, 200), mp=100, evasion=1, name="Orc"):
-        Creature.__init__(self, hp, mp, evasion, name)
-        self.weapon = EasyMonster.EasyMonster_weapon
+    def __init__(self, name="Orc", hp=random.randint(100, 200), mp=100, evasion=1):
+        Creature.__init__(self, name, hp, mp, evasion)
+        self.weapon_in_hand = EasyMonster.EasyMonster_weapon
+        self.player_basic_attack = 2
 
 
 class MediumMonster(Creature):
@@ -109,9 +120,10 @@ class MediumMonster(Creature):
     MediumMonster_weapon = Weapons(15, 1)
     gold_drop = random.randint(10, 30)
 
-    def __init__(self, hp=random.randint(200, 300), mp=100, evasion=1, name="Orc Warrior"):
-        Creature.__init__(self, hp, mp, evasion, name)
-        self.weapon = MediumMonster.MediumMonster_weapon
+    def __init__(self, name="Orc Warrior", hp=random.randint(200, 300), mp=100, evasion=1):
+        Creature.__init__(self, name, hp, mp, evasion)
+        self.weapon_in_hand = MediumMonster.MediumMonster_weapon
+        self.player_basic_attack = 5
 
 
 class HardMonster(Creature):
@@ -120,9 +132,10 @@ class HardMonster(Creature):
     HardMonster_weapon = Weapons(20, 2)
     gold_drop = random.randint(20, 40)
 
-    def __init__(self, hp=random.randint(300, 400), mp=100, evasion=1, name="Orc Captain"):
-        Creature.__init__(self, hp, mp, evasion, name)
-        self.weapon = HardMonster.HardMonster_weapon
+    def __init__(self, name="Orc Captain", hp=random.randint(300, 400), mp=100, evasion=1):
+        Creature.__init__(self, name, hp, mp, evasion)
+        self.weapon_in_hand = HardMonster.HardMonster_weapon
+        self.player_basic_attack = 10
 
 
 class LegendaryMonster(Creature):
@@ -131,9 +144,10 @@ class LegendaryMonster(Creature):
     LegendaryMonster_weapon = Weapons(35, 2)
     gold_drop = random.randint(50, 120)
 
-    def __init__(self, hp=random.randint(500, 600), mp=100, evasion=1, name="Orc Leader"):
-        Creature.__init__(self, hp, mp, evasion, name)
-        self.weapon = LegendaryMonster.LegendaryMonster_weapon
+    def __init__(self, name="Orc Leader", hp=random.randint(500, 600), mp=100, evasion=1):
+        Creature.__init__(self, name, hp, mp, evasion)
+        self.weapon_in_hand = LegendaryMonster.LegendaryMonster_weapon
+        self.player_basic_attack = 20
 
 
 class Chest:
@@ -238,10 +252,10 @@ class ActionsFight:
     """Actions connected with fight"""
 
     @staticmethod
-    def attack(weapon):
-        hit = weapon.damage_output()
+    def attack(weapon, creature):
+        hit = weapon.weapon_damage_output()
         multiplier = weapon._attack_speed
-        hp_loss = hit*multiplier  # damage from attack
+        hp_loss = hit*multiplier + creature.player_basic_attack  # damage from attack
         return int(hp_loss)
 
     @staticmethod
@@ -277,20 +291,20 @@ class Fight:
         print("FIGHT BEGINS:")
         time.sleep(1)
         while player.alive is True or enemy.alive is True:
-            hit = ActionsFight.attack(player.weapon)
+            hit = ActionsFight.attack(player.weapon_in_hand, player)
             print(f"You hit for {hit} hp")
-            enemy_hp = enemy_hp - hit
+            enemy_hp = validators.change_below_0(enemy_hp, hit)
             time.sleep(0.3)
-            print(f"ENEMY has {enemy_hp} left.")
+            print(f"ENEMY has {enemy_hp} HP left.")
             time.sleep(1)
             if enemy_hp <= 0:
                 enemy.alive = False
                 break
-            hit = ActionsFight.attack(enemy.weapon)
+            hit = ActionsFight.attack(enemy.weapon_in_hand, enemy)
             print(f"Enemy hit for {hit} hp")
-            player_hp = player_hp - hit
+            player_hp = validators.change_below_0(player_hp, hit)
             time.sleep(0.3)
-            print(f"YOU have {player_hp} left.")
+            print(f"YOU have {player_hp} HP left.")
             time.sleep(1)
             if player_hp <= 0:
                 player.alive = False

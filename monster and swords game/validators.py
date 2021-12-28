@@ -65,3 +65,11 @@ def validate_str_value(str_value):
         return str_value
     else:
         raise TypeError("Attribute must be string type.")
+
+
+# if value is below 0 it changes it to 0
+def change_below_0(a, b):
+    if (a - b) < 0:
+        return 0
+    else:
+        return a - b
