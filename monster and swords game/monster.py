@@ -193,7 +193,7 @@ class Backpack:
 
     # withdraws from backpack item chosen by slot number
     def withdraw_item_from_backpack(self, slot_index):
-        validators.validate_int_value_2(slot_index)
+        validators.validate_sack_number_value(slot_index)
         for item_slot in range(len(self.backpack_slots)):
             if (item_slot + 1) == slot_index:
                 self.backpack_slots[item_slot] = "Empty slot"
@@ -210,18 +210,18 @@ class GoldSack:
 
     def __init__(self, owner, gold_amount=0):
         self._owner = owner._name
-        self.gold_amount = validators.validate_int_value_2(gold_amount)
+        self.gold_amount = validators.validate_sack_number_value(gold_amount)
 
     def __repr__(self):
         return f"Sack of {self._owner} with {self.gold_amount} gold"
 
     # add gold to sack
     def put_gold_into_sack(self, value):
-        self.gold_amount = self.gold_amount + value
+        self.gold_amount = self.gold_amount + validators.validate_sack_number_value(value)
 
     # withdraw gold from sack
     def withdraw_gold_from_sack(self, value):
-        self.gold_amount = self.gold_amount - value
+        self.gold_amount = self.gold_amount - validators.validate_sack_number_value(value)
         if self.gold_amount < 0:
             self.gold_amount = 0
 

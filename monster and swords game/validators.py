@@ -13,15 +13,19 @@ def validate_int_value(int_value):
             raise ValueError("Attribute must be greater than 0.")
 
 
-# validates input of gold sack, value must be INT and value >=0
-def validate_int_value_2(int_value):
-    """Must be INT and value >=0"""
-    if isinstance(int_value, int) and int_value >= 0:
-        return int_value
+# validates input of gold sack, value must be number and value >=0
+def validate_sack_number_value(value):
+    """Should be INT and value >=0"""
+    if isinstance(value, float) and value >= 0:
+        sack_value = int(round(value, 0))
+        return sack_value
+    elif isinstance(value, int) and value >= 0:
+        sack_value = value
+        return sack_value
     else:
-        if not isinstance(int_value, int):
-            raise TypeError("Attribute must be integer type.")
-        elif int_value < 0:
+        if not isinstance(value, int) or not isinstance(value, float):
+            raise TypeError("Attribute must be number type.")
+        elif value < 0:
             raise ValueError("Attribute must be greater than 0.")
 
 
