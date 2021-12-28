@@ -19,7 +19,13 @@ print(player_sack.check_gold_in_sack())
 
 
 #  testing fight
-orc = EasyMonster()  # creates monster
-print(orc._health_points)
+print(michal.strength)
+print(michal.experience, "exp")
+print(michal.level, "lvl")
+orc = MediumMonster(hp=10)  # creates monster
+print(orc._health_points, " monster hp")
 Fight.fight(michal, orc, player_sack)
-print(player_sack.check_gold_in_sack())  # all passed
+print(player_sack.check_gold_in_sack())
+print(michal.experience, "exp")
+print(michal.level, "lvl")
+print(michal.strength)  # all passed

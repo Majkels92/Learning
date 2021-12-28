@@ -24,7 +24,9 @@ class Creature:
         return f"This is Creature class object. ID:{id(self)}"
 
     def leveling_method(self):
-        experience_needed = self.level*200 + 800
+        experience_needed = 0
+        for i in range(self.level):
+            experience_needed += (i+1) * 200 + 800
         if self.experience >= experience_needed:
             self.level += 1
             self.strength += 2
@@ -143,6 +145,7 @@ class EasyMonster(Creature):
     gained_experience = 100
     EasyMonster_weapon = Weapons(6, 1)
     gold_drop = random.randint(10, 20)
+    chest_drop = None
 
     def __init__(self, name="Orc", hp=random.randint(100, 200), mp=100, evasion=1):
         Creature.__init__(self, name, hp, mp, evasion)
@@ -152,7 +155,7 @@ class EasyMonster(Creature):
 
 class MediumMonster(Creature):
 
-    gained_experience = 200
+    gained_experience = 2000
     MediumMonster_weapon = Weapons(15, 1)
     gold_drop = random.randint(10, 30)
     chest_drop = Chest("wooden")
@@ -284,11 +287,12 @@ class Actions:
 
     @staticmethod
     def loot_chest(chest_source, player_sack):
-        chest_source.open_chest(player_sack)
+        chest_source.chest_drop.open_chest(player_sack)
 
     @staticmethod
     def gain_experience(player, experience_source):
         player.experience += experience_source.gained_experience
+        player.leveling_method()
 
 
 class Fight:
@@ -327,4 +331,7 @@ class Fight:
             print("You died")
         else:
             print("You won fight!")
+            if enemy.chest_drop is not None:
+                Actions.loot_chest(enemy, player_sack)
             Actions.loot_gold(enemy, player_sack)
+            Actions.gain_experience(player, enemy)
