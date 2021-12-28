@@ -141,27 +141,31 @@ class Chest:
 
     def __init__(self):
         self.rarity = Chest.draw_rarity()
-        self.drop = self.chest_gold_drop()
+        self.gold_drop = self.chest_gold_drop()
+
+    def __repr__(self):
+        return f"This is {self.rarity} chest with {self.gold_drop} gold"
 
     # draws and set rarity of chest
     @staticmethod
     def draw_rarity():
         chest_type = ["wooden", "iron", "golden"]
         draw_chest_type = random.choices(chest_type, [70, 25, 5])
-        return draw_chest_type
+        chest_type = draw_chest_type[0]  # gives string type variable
+        return chest_type
 
     # draws amount of gold dropped from chest
     def chest_gold_drop(self):
-        if self.rarity == "golden":
-            chest_gold_drop = 100
+        if self.rarity == "wooden":
+            gold_drop = 10
         elif self.rarity == "iron":
-            chest_gold_drop = 50
-        elif self.rarity == "wooden":
-            chest_gold_drop = 10
-        return chest_gold_drop
+            gold_drop = 50
+        elif self.rarity == "golden":
+            gold_drop = 100
+        return gold_drop
 
     def open_chest(self, sack):
-        gold_received = self.drop
+        gold_received = self.gold_drop
         sack.put_gold_into_sack(gold_received)
 
 

@@ -9,7 +9,7 @@ def validate_int_value(int_value):
     else:
         if not isinstance(int_value, int):
             raise TypeError("Attribute must be integer type.")
-        elif int_value <= 0:
+        elif isinstance(int_value, int) and int_value <= 0:
             raise ValueError("Attribute must be greater than 0.")
 
 
@@ -23,10 +23,12 @@ def validate_sack_number_value(value):
         sack_value = value
         return sack_value
     else:
-        if not isinstance(value, int) or not isinstance(value, float):
-            raise TypeError("Attribute must be number type.")
-        elif value < 0:
+        if isinstance(value, float) or isinstance(value, int) and value < 0:
             raise ValueError("Attribute must be greater than 0.")
+        elif not isinstance(value, int):
+            raise TypeError("Attribute must be number type.")
+        elif not isinstance(value, float):
+            raise TypeError("Attribute must be number type.")
 
 
 # validates value of weapon damage
@@ -37,7 +39,7 @@ def validate_int_weapon_dmg_value(int_value):
     else:
         if not isinstance(int_value, int):
             raise TypeError("Attribute must be integer type.")
-        elif 0 < int_value <= 100:
+        elif isinstance(int_value, int) and 0 < int_value <= 100:
             raise ValueError("Attribute must be greater than 0 and lower or equal of 100.")
 
 
@@ -53,7 +55,7 @@ def validate_float_weapon_att_spd_value(number_value):
     else:
         if not isinstance(float_value, float):
             raise TypeError("Attribute must be integer type.")
-        elif 1 < float_value <= 4:
+        elif isinstance(number_value, int) or isinstance(number_value, float) and 1 < float_value <= 4:
             raise ValueError("Attribute must be greater or equal than 1 and lower or equal of 4.")
 
 
