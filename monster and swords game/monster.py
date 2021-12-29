@@ -25,12 +25,15 @@ class Creature:
         return f"This is Creature class object. ID:{id(self)}"
 
     def leveling_method(self):
+        exp_constant = 800
+        exp_constant_multiplayer = 200
+        str_lvl_bonus = 2
         experience_needed = 0
         for i in range(self.level):
-            experience_needed += (i+1) * 200 + 800
+            experience_needed += exp_constant + (i+1) * exp_constant_multiplayer
         if self.experience >= experience_needed:
             self.level += 1
-            self.strength += 2
+            self.strength += str_lvl_bonus
 
     # show instance: health points, mana points and speed
     def show_creature_stats(self):
@@ -123,25 +126,23 @@ class Chest:
         self.gold_drop = self.chest_gold_drop()
 
     def __repr__(self):
-        return f"This is {self.rarity} chest with {self.gold_drop} gold"
+        return f"This is {self.rarity.name} chest with {self.gold_drop} gold"
 
     # draws and set rarity of chest
     @staticmethod
     def draw_rarity():
-        draw_chest_type = random.choices([1, 2, 3], [70, 25, 5])
-        chest_type = draw_chest_type[0]  # gives string type variable
-        return chest_type
+        chest_list = [c_type for c_type in ChestTypes]
+        draw_chest_type = random.choices(chest_list, [70, 25, 5])
+        drawn_chest = draw_chest_type[0]  # gives string type variable
+        return drawn_chest
 
     # draws amount of gold dropped from chest
     def chest_gold_drop(self):
         if self.rarity == ChestTypes.wooden:
-            self.rarity = ChestTypes.wooden.name
             gold_drop = 10
         elif self.rarity == ChestTypes.iron:
-            self.rarity = ChestTypes.iron.name
             gold_drop = 50
         elif self.rarity == ChestTypes.golden:
-            self.rarity = ChestTypes.golden.name
             gold_drop = 100
         return gold_drop
 
