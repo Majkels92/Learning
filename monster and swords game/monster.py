@@ -72,7 +72,8 @@ class Weapons:
     @staticmethod
     def drawing_att_speed_value(att_spd_possibility_min=1, att_spd_possibility_max=10):
         """ Draw value of basic attack speed with weighted possibility (common = 60%, rare = 30%, legendary=10%)
-        att_spd_range - attribute used for increasing possibility of better attack speed draw, used in Chest class"""
+        att_spd_range - attribute used for increasing possibility of better attack speed draw, used in Chest class
+        """
         possibility = random.randint(att_spd_possibility_min, att_spd_possibility_max)
         if possibility <= 6:
             return round(random.uniform(1, 2.5), 1)
@@ -145,6 +146,15 @@ class Chest:
         elif self.rarity == ChestTypes.golden:
             gold_drop = 100
         return gold_drop
+
+    def chest_weapon_drop(self):
+        if self.rarity == ChestTypes.wooden:
+            weapon_drop = Weapons(Weapons.drawing_dmg_value(1, 6), Weapons.drawing_att_speed_value(1, 6))
+        elif self.rarity == ChestTypes.iron:
+            weapon_drop = Weapons(Weapons.drawing_dmg_value(1, 9), Weapons.drawing_att_speed_value(1, 9))
+        elif self.rarity == ChestTypes.golden:
+            weapon_drop = Weapons(Weapons.drawing_dmg_value(7, 10), Weapons.drawing_att_speed_value(7, 10))
+        return weapon_drop
 
     def open_chest(self, sack):
         gold_received = self.gold_drop
@@ -229,7 +239,7 @@ class Backpack:
                 print("No room in inventory")
 
     # withdraws from backpack item chosen by slot number
-    def withdraw_item_from_backpack(self, slot_index):
+    def withdraw_item_from_slot(self, slot_index):
         validators.validate_sack_number_value(slot_index)
         for item_slot in range(len(self.backpack_slots)):
             if (item_slot + 1) == slot_index:
