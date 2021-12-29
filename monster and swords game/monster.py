@@ -205,8 +205,7 @@ class LegendaryMonster(Creature):
 class Backpack:
     """Defines backpack and number of available slots; __init__(self, slots=15)"""
 
-    def __init__(self, owner, slots=15):
-        self._owner = owner._name
+    def __init__(self, slots=15):
         self.backpack_slots = []
         self._basic_slots = validators.validate_int_value(slots)
         for slot in range(self._basic_slots):
@@ -242,15 +241,14 @@ class Backpack:
 
 
 class GoldSack:
-    """Creates sack for gold for chosen player, necessary name of owner as first argument.
-    _-init__(self, owner, gold_amount=0) """
+    """Creates sack for gold.
+    _-init__(self, gold_amount=0) """
 
-    def __init__(self, owner, gold_amount=0):
-        self._owner = owner._name
+    def __init__(self, gold_amount=0):
         self.gold_amount = validators.validate_sack_number_value(gold_amount)
 
     def __repr__(self):
-        return f"Sack of {self._owner} with {self.gold_amount} gold"
+        return f"Sack with {self.gold_amount} gold"
 
     # add gold to sack
     def put_gold_into_sack(self, value):
@@ -264,7 +262,7 @@ class GoldSack:
 
     # shows amount of gold
     def check_gold_in_sack(self):
-        return f"In {self._owner} sack is {self.gold_amount} gold"
+        return f"Sack has {self.gold_amount} gold"
 
 
 class ActionsFight:
@@ -292,12 +290,12 @@ class Actions:
 
     # method transferring dropped gold from beaten enemy or opened chest to chosen sack (usually player's)
     @staticmethod
-    def loot_gold(looted_obj, profit_sack):
-        profit_sack.put_gold_into_sack(looted_obj.gold_drop)
+    def loot_gold(looted_obj, sack):
+        sack.put_gold_into_sack(looted_obj.gold_drop)
 
     @staticmethod
-    def loot_chest(chest_source, player_sack):
-        chest_source.chest_drop.open_chest(player_sack)
+    def loot_chest(chest_source, sack):
+        chest_source.chest_drop.open_chest(sack)
 
     @staticmethod
     def gain_experience(player, experience_source):
