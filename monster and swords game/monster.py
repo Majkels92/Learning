@@ -50,7 +50,7 @@ class Weapons:
         self.additional_damage = 0
 
     def __repr__(self):
-        return f"This is Weapon class object. ID:{id(self)}"
+        return f"This is Weapon class object. ID:{id(self)} with {self._basic_damage} dmg and {self._attack_speed} spd"
 
     @property
     def basic_damage(self):
@@ -125,9 +125,10 @@ class Chest:
         else:
             self.rarity = rarity
         self.gold_drop = self.chest_gold_drop()
+        self.weapon_drop = self.chest_weapon_drop()
 
     def __repr__(self):
-        return f"This is {self.rarity.name} chest with {self.gold_drop} gold"
+        return f"This is {self.rarity.name} chest with {self.gold_drop} gold and {self.weapon_drop}"
 
     # draws and set rarity of chest
     @staticmethod
@@ -156,9 +157,11 @@ class Chest:
             weapon_drop = Weapons(Weapons.drawing_dmg_value(7, 10), Weapons.drawing_att_speed_value(7, 10))
         return weapon_drop
 
-    def open_chest(self, sack):
+    def open_chest(self, sack, backpack):
         gold_received = self.gold_drop
         sack.put_gold_into_sack(gold_received)
+        weapon_received = self.weapon_drop
+        backpack.put_item_into_backpack(weapon_received)
 
 
 class EasyMonster(Creature):
@@ -233,9 +236,10 @@ class Backpack:
     # put item in first empty slot in backpack
     def put_item_into_backpack(self, item):
         for item_slot in range(len(self.backpack_slots)):
-            if item_slot == "Empty slot":
+            if self.backpack_slots[item_slot] == "Empty slot":
                 self.backpack_slots[item_slot] = item
-            else:
+                break
+            if item_slot == 14:
                 print("No room in inventory")
 
     # withdraws from backpack item chosen by slot number
@@ -249,6 +253,10 @@ class Backpack:
     def slot_extender(self, additional_slot):
         for new_slot in range(additional_slot):
             self.backpack_slots.append("Empty slot")
+
+    def show_slots(self):
+        for i in self.backpack_slots:
+            print(i)
 
 
 class GoldSack:
@@ -305,8 +313,8 @@ class Actions:
         sack.put_gold_into_sack(looted_obj.gold_drop)
 
     @staticmethod
-    def loot_chest(chest_source, sack):
-        chest_source.chest_drop.open_chest(sack)
+    def loot_chest(chest_source, sack, backpack):
+        chest_source.chest_drop.open_chest(sack, backpack)
 
     @staticmethod
     def gain_experience(player, experience_source):
@@ -322,7 +330,7 @@ class Fight:
 
     # method simulating fight, if player win fight, gives him dropped gold from nemesis
     @staticmethod
-    def fight(player, enemy, player_sack):
+    def fight(player, enemy, player_sack, backpack):
         player_hp = player._health_points
         enemy_hp = enemy._health_points
         print("FIGHT BEGINS:")
@@ -351,6 +359,6 @@ class Fight:
         else:
             print("You won fight!")
             if enemy.chest_drop is not None:
-                Actions.loot_chest(enemy, player_sack)
+                Actions.loot_chest(enemy, player_sack, backpack)
             Actions.loot_gold(enemy, player_sack)
             Actions.gain_experience(player, enemy)
