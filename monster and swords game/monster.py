@@ -2,6 +2,7 @@
 import random
 import validators
 import time
+import enum
 
 
 class Creature:
@@ -107,6 +108,8 @@ class Weapons:
 class Chest:
     """Creates Chest instance and defining its type and content, __init__(self, rarity=None) if None draws rarity"""
 
+    chest_types = enum.Enum("chest_types", "wooden iron golden")
+
     def __init__(self, rarity=None):
         if rarity is None:
             self.rarity = Chest.draw_rarity()
@@ -120,18 +123,17 @@ class Chest:
     # draws and set rarity of chest
     @staticmethod
     def draw_rarity():
-        chest_type = ["wooden", "iron", "golden"]
-        draw_chest_type = random.choices(chest_type, [70, 25, 5])
+        draw_chest_type = random.choices([1, 2, 3], [70, 25, 5])
         chest_type = draw_chest_type[0]  # gives string type variable
         return chest_type
 
     # draws amount of gold dropped from chest
     def chest_gold_drop(self):
-        if self.rarity == "wooden":
+        if self.rarity == Chest.chest_types.wooden:
             gold_drop = 10
-        elif self.rarity == "iron":
+        elif self.rarity == Chest.chest_types.iron:
             gold_drop = 50
-        elif self.rarity == "golden":
+        elif self.rarity == Chest.chest_types.golden:
             gold_drop = 100
         return gold_drop
 
