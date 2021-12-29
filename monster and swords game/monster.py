@@ -105,10 +105,15 @@ class Weapons:
         print(f"This weapon has: \n{self._basic_damage} dmg\n{self._attack_speed} att spd")
 
 
+class ChestTypes(enum.IntEnum):
+
+    wooden = 1
+    iron = 2
+    golden = 3
+
+
 class Chest:
     """Creates Chest instance and defining its type and content, __init__(self, rarity=None) if None draws rarity"""
-
-    chest_types = enum.Enum("chest_types", "wooden iron golden")
 
     def __init__(self, rarity=None):
         if rarity is None:
@@ -129,11 +134,11 @@ class Chest:
 
     # draws amount of gold dropped from chest
     def chest_gold_drop(self):
-        if self.rarity == Chest.chest_types.wooden:
+        if self.rarity == ChestTypes.wooden:
             gold_drop = 10
-        elif self.rarity == Chest.chest_types.iron:
+        elif self.rarity == ChestTypes.iron:
             gold_drop = 50
-        elif self.rarity == Chest.chest_types.golden:
+        elif self.rarity == ChestTypes.golden:
             gold_drop = 100
         return gold_drop
 
@@ -160,7 +165,7 @@ class MediumMonster(Creature):
     gained_experience = 2000
     MediumMonster_weapon = Weapons(15, 1)
     gold_drop = random.randint(10, 30)
-    chest_drop = Chest("wooden")
+    chest_drop = Chest(1)
 
     def __init__(self, name="Orc Warrior", hp=random.randint(200, 300), mp=100, evasion=1):
         Creature.__init__(self, name, hp, mp, evasion)
