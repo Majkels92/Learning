@@ -135,10 +135,13 @@ class Chest:
     # draws amount of gold dropped from chest
     def chest_gold_drop(self):
         if self.rarity == ChestTypes.wooden:
+            self.rarity = ChestTypes.wooden.name
             gold_drop = 10
         elif self.rarity == ChestTypes.iron:
+            self.rarity = ChestTypes.iron.name
             gold_drop = 50
         elif self.rarity == ChestTypes.golden:
+            self.rarity = ChestTypes.golden.name
             gold_drop = 100
         return gold_drop
 
