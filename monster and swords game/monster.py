@@ -324,10 +324,6 @@ class Actions:
 
 class Fight:
 
-    @staticmethod
-    def evading_attack(player, enemy):
-        pass
-
     # method simulating fight, if player win fight, gives him dropped gold from nemesis
     @staticmethod
     def fight(player, enemy, player_sack, backpack):
@@ -338,7 +334,10 @@ class Fight:
         while player.alive is True or enemy.alive is True:
             hit = ActionsFight.attack(player.weapon_in_hand, player)
             print(f"You hit for {hit} hp")
-            enemy_hp = validators.change_below_0(enemy_hp, hit)
+            if ActionsFight.evade_attack(enemy) is True:
+                print(f"Attack evaded")
+            else:
+                enemy_hp = validators.subtraction_n_change_below_0(enemy_hp, hit)
             time.sleep(0.3)
             print(f"ENEMY has {enemy_hp} HP left.")
             time.sleep(1)
@@ -347,7 +346,10 @@ class Fight:
                 break
             hit = ActionsFight.attack(enemy.weapon_in_hand, enemy)
             print(f"Enemy hit for {hit} hp")
-            player_hp = validators.change_below_0(player_hp, hit)
+            if ActionsFight.evade_attack(player) is True:
+                print(f"Attack evaded")
+            else:
+                player_hp = validators.subtraction_n_change_below_0(player_hp, hit)
             time.sleep(0.3)
             print(f"YOU have {player_hp} HP left.")
             time.sleep(1)

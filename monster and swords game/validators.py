@@ -68,7 +68,7 @@ def validate_str_value(str_value):
 
 
 # if value is below 0 it changes it to 0
-def change_below_0(a, b):
+def subtraction_n_change_below_0(a, b):
     if (a - b) < 0:
         return 0
     else:
