@@ -7,9 +7,9 @@ def bubble_sorting(sorted_list):
                 sorted_list[i], sorted_list[i+1] = sorted_list[i+1], sorted_list[i]
             elif sorted_list[i+1] == "Empty slot":
                 k = 1
-                while i+k+1 != len(sorted_list):
-                    if sorted_list[i + 1 + k] != "Empty slot":
-                        sorted_list[i], sorted_list[i+1+k] = sorted_list[i+1+k], sorted_list[i]
+                while i+k != len(sorted_list):
+                    if sorted_list[i + k] != "Empty slot":
+                        sorted_list[i], sorted_list[i+k] = sorted_list[i+k], sorted_list[i]
                     k += 1
     return sorted_list
 
