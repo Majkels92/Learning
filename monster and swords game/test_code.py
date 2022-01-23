@@ -1,6 +1,6 @@
-from monster import *
-
-
+from actions import *
+from containers import *
+from characters import *
 
 michal = Creature("Michal Skowronski")  # creates player
 michal.weapon_in_hand = Weapons(20, 2.0)  # adds weapon for player
@@ -35,7 +35,6 @@ print(player_sack.check_gold_in_sack())
 print(michal.experience, "exp")
 print(michal.level, "lvl")
 print(michal.strength)  # all passed
-
 
 
 # testing backpack 1

@@ -1,4 +1,4 @@
-"""Python file including functions that validates input data in monster.py file/app."""
+"""Python file including functions that validates input data in characters.py file/app."""
 
 
 # validate input value, value must be INT type and value > 0
