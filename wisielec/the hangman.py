@@ -52,11 +52,6 @@ def check_if_letter_in_word(picked_letter):  # checking if typed letter is in ga
     else:
         print("NO MATCH FOUND :(")
         chosen_letters.append(picked_letter)
-        counter = 0
-        for i in word_letters:
-            if i == picked_letter:
-                display_string[counter] = word_letters[counter]
-            counter += 1
         gibbet_status += 1
 
 
@@ -93,7 +88,6 @@ if __name__ == '__main__':
     chosen_letters = []
     display_string = create_word_display(game_word)  # creates display list
     display_word_progress(display_string)
-    print(game_word)
     menu()
     input("press any key to exit")
     quit()
