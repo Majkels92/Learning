@@ -38,6 +38,7 @@ class Actions:
     @staticmethod
     def gain_experience(player, experience_source):
         player.experience += experience_source.gained_experience
+        print(f"You gained {experience_source.gained_experience} EXP")
         player.leveling_method()
 
 

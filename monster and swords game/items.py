@@ -12,7 +12,7 @@ class Weapons:
         self.additional_damage = 0
 
     def __repr__(self):
-        return f"This is Weapon class object. ID:{id(self)} with {self._basic_damage} dmg and {self._attack_speed} spd"
+        return f"This is Weapon with {self._basic_damage} dmg and {self._attack_speed} spd"
 
     @property
     def basic_damage(self):

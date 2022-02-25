@@ -23,13 +23,17 @@ class Creature:
     def __repr__(self):
         return f"This is Creature class object. ID:{id(self)}"
 
-    def leveling_method(self):
+    def needed_experience(self):
         exp_constant = 800
         exp_constant_multiplayer = 200
-        str_lvl_bonus = 2
         experience_needed = 0
         for i in range(self.level):
-            experience_needed += exp_constant + (i+1) * exp_constant_multiplayer
+            experience_needed += exp_constant + (i + 1) * exp_constant_multiplayer
+        return experience_needed
+
+    def leveling_method(self):
+        experience_needed = self.needed_experience()
+        str_lvl_bonus = 2
         if self.experience >= experience_needed:
             self.level += 1
             self.strength += str_lvl_bonus
@@ -39,9 +43,14 @@ class Creature:
         print(f"{self._name} has: \n{self._health_points} hp \n{self._mana_points} mp \n{self.evasion} "
               f"evasion")
 
+    def show_stats(self):
+        experience_needed = self.needed_experience()
+        print(f"{self._name} has: \n{self._health_points} hp \n{self._mana_points} mp \n{self.evasion} "
+              f"evasion \n{self.level} level \n{self.experience}/{experience_needed}\n{self.strength} strength")
+        print(f"You are holding {self.weapon_in_hand}")
+
 
 class EasyMonster(Creature):
-
     gained_experience = 100
     EasyMonster_weapon = Weapons(6, 1)
     gold_drop = random.randint(10, 20)
@@ -54,7 +63,6 @@ class EasyMonster(Creature):
 
 
 class MediumMonster(Creature):
-
     gained_experience = 2000
     MediumMonster_weapon = Weapons(15, 1)
     gold_drop = random.randint(10, 30)
@@ -67,7 +75,6 @@ class MediumMonster(Creature):
 
 
 class HardMonster(Creature):
-
     gained_experience = 400
     HardMonster_weapon = Weapons(20, 2)
     gold_drop = random.randint(20, 40)
@@ -80,7 +87,6 @@ class HardMonster(Creature):
 
 
 class LegendaryMonster(Creature):
-
     gained_experience = 1000
     LegendaryMonster_weapon = Weapons(35, 2)
     gold_drop = random.randint(50, 120)
@@ -90,6 +96,3 @@ class LegendaryMonster(Creature):
         Creature.__init__(self, name, hp, mp, evasion)
         self.weapon_in_hand = LegendaryMonster.LegendaryMonster_weapon
         self.player_basic_attack = 20
-
-
-
