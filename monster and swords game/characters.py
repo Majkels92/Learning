@@ -66,7 +66,7 @@ class MediumMonster(Creature):
     gained_experience = 2000
     MediumMonster_weapon = Weapons(15, 1)
     gold_drop = random.randint(10, 30)
-    chest_drop = Chest(1)
+    chest_drop = Chest(1)  # drops wooden chest
 
     def __init__(self, name="Orc Warrior", hp=random.randint(200, 300), mp=100, evasion=1):
         Creature.__init__(self, name, hp, mp, evasion)

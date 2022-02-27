@@ -1,5 +1,5 @@
 from characters import *
-import locations, actions, containers, bubble_sort_backpack
+import locations, actions, containers, sort_backpack
 
 
 def greeting():
@@ -41,22 +41,19 @@ def inside_location_menu(player, player_sack, backpack):
 
 
 def backpack_menu(player, player_sack, backpack):
+    backpack.show_slots()
     backpack_move = input("""What do you want to do?
-    show what is in backpack - type: 1
-    withdraw from back pack - type: 2
-    sort items in backpack - type: 3
-    return to previous menu - type: 4""")
+    withdraw from back pack - type: 1
+    sort items in backpack - type: 2
+    return to previous menu - type: 3""")
     if backpack_move == '1':
-        backpack.show_slots()
-        backpack_menu(player, player_sack, backpack)
-    elif backpack_move == '2':
         slot_index = int(input("which slot ?"))
         backpack.withdraw_item_from_slot(slot_index)
         backpack_menu(player, player_sack, backpack)
-    elif backpack_move == '3':
-        bubble_sort_backpack.bubble_sorting(backpack.backpack_slots)
+    elif backpack_move == '2':
+        sort_backpack.sort_empty_slots(backpack.backpack_slots)
         backpack_menu(player, player_sack, backpack)
-    elif backpack_move == '4':
+    elif backpack_move == '3':
         in_game_menu(player, player_sack, backpack)
     else:
         backpack_menu(player, player_sack, backpack)
@@ -69,6 +66,7 @@ def in_game_menu(player, player_sack, backpack):
     explore Dark Cave - type: 3
     check your stats - type: 4
     show your backpack - type 5:
+    check gold in sack - type 6:
     exit game - type: exit""")
     if player_move == '1':
         locations.MarhabaDesert.entrance_description()
@@ -81,14 +79,15 @@ def in_game_menu(player, player_sack, backpack):
         inside_location_menu(player, player_sack, backpack)
     elif player_move == '4':
         player.show_stats()
+        in_game_menu(player, player_sack, backpack)
     elif player_move == '5':
         backpack_menu(player, player_sack, backpack)
+    elif player_move == '6':
+        print("\n", player_sack, "\n")
+        in_game_menu(player, player_sack, backpack)
     elif player_move == 'exit':
         input('press ENTER to exit')
         exit()
     else:
         print("You can't go there...")
         in_game_menu(player, player_sack, backpack)
-
-
-

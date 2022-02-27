@@ -77,7 +77,8 @@ class Fight:
                 player.alive = False
                 break
         if player.alive is False:
-            print("You died")
+            print("You died, GAME OVER")
+            exit()
         else:
             print("You won fight!")
             if enemy.chest_drop is not None:

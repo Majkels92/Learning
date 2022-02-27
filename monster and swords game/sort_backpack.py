@@ -1,4 +1,4 @@
-def bubble_sorting(sorted_list):
+def sort_empty_slots(sorted_list):
     for i in range(len(sorted_list)-1):
         if sorted_list[i] == "Empty slot":
             if sorted_list[i+1] != "Empty slot":
@@ -13,6 +13,6 @@ def bubble_sorting(sorted_list):
 
 
 if __name__ == "__main__":
-    lista = [1, 2, "Empty slot", 5, "Empty slot", "Empty slot", 6]
+    lista = [1, 2, "Empty slot", 7, "Empty slot", "Empty slot", 6]
     print(lista)
-    print(bubble_sorting(lista))
+    print(sort_empty_slots(lista))
