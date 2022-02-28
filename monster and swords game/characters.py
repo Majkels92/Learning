@@ -8,7 +8,11 @@ class Creature:
     """Defines basic statistics of every creature and person in game.;
      _init__(self, name="John Doe", hp=100, mp=100, m_spd=1)"""
 
-    def __init__(self, name="John Doe", hp=100, mp=100, evasion=1):
+    gold_drop = None
+    gained_experience = None
+    chest_drop = None
+
+    def __init__(self, name="John Doe", hp=100, mp=100, evasion=1, strength=10):
         self._health_points = validators.validate_int_value(hp)
         self._mana_points = validators.validate_int_value(mp)
         self.evasion = validators.validate_int_value(evasion)
@@ -17,7 +21,7 @@ class Creature:
         self.alive = True
         self.experience = 0
         self.level = 1
-        self.strength = 10
+        self.strength = validators.validate_int_value(strength)
         self.player_basic_attack = self.strength
 
     def __repr__(self):
