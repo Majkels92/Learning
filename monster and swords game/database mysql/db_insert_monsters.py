@@ -7,19 +7,11 @@ mydb = mysql.connector.connect(
     database="monsters_and_swords_game_db"
 )
 
-mycursor = mydb.cursor()
+cursor = mydb.cursor()
 
+# CREATING TABLE
 try:
-    mycursor.execute("""CREATE TABLE weapons
-     (id_weapon INT AUTO_INCREMENT PRIMARY KEY,
-     damage INT NOT NULL,
-     attack_speed DEC(1,1) NOT NULL)""")
-except:
-    pass
-
-
-try:
-    mycursor.execute("""CREATE TABLE monsters
+    cursor.execute("""CREATE TABLE monsters
     (id_monster INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(55) NOT NULL,
     id_weapon INT NOT NULL,
@@ -31,8 +23,8 @@ try:
     chest_drop INT,
     hp INT NOT NULL,
     strength INT NOT NULL)""")
-except:
-    mycursor.execute("SHOW TABLES")
-    for x in mycursor:
+except:  # IF EXISTS SHOW TABLES IN DB
+    cursor.execute("SHOW TABLES")
+    for x in cursor:
         print(x)
 
