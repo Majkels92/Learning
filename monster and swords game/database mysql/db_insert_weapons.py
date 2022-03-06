@@ -5,7 +5,7 @@ mydb = mysql.connector.connect(
     host=db_login_data.host,
     user=db_login_data.user,
     password=db_login_data.password,
-    database=db_login_data.user.monsters_and_swords_game_db
+    database=db_login_data.database
 )
 
 cursor = mydb.cursor()
@@ -23,7 +23,7 @@ except:
 
 cursor.execute("SELECT * FROM weapons")
 my_results = cursor.fetchall()
-
+print(type(my_results))
 if my_results is None:
     # inserting data
     sql = "INSERT INTO weapons (damage, attack_speed) VALUES (%s, %s)"
