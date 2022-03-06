@@ -23,8 +23,8 @@ except:
 
 cursor.execute("SELECT * FROM weapons")
 my_results = cursor.fetchall()
-print(type(my_results))
-if my_results is None:
+
+if len(my_results) == 0:
     # inserting data
     sql = "INSERT INTO weapons (damage, attack_speed) VALUES (%s, %s)"
     val = [(4, 1.0), (6, 1.0), (8, 1.0), (10, 1.0), (12, 1.0), (14, 1.0),

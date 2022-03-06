@@ -23,7 +23,8 @@ try:
     gained_experience INT NOT NULL,
     chest_drop INT,
     hp INT NOT NULL,
-    strength INT NOT NULL)""")
+    strength INT NOT NULL
+    difficulty INT NOT NULL)""")
 except:  # IF EXISTS SHOW TABLES IN DB
     cursor.execute("SHOW TABLES")
     for x in cursor:
@@ -32,15 +33,15 @@ except:  # IF EXISTS SHOW TABLES IN DB
 cursor.execute("SELECT * FROM monsters")
 my_results = cursor.fetchall()
 
-if my_results is None:
+if len(my_results) == 0:
     # inserting data
     columns = "name, id_weapon, gold_drop, gained_experience, chest_drop, hp, strength, difficulty"
     sql = f"INSERT INTO monsters ({columns}) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
     val = [("Orc", 2, 30, 400, 1, 60, 4, 1),
            ("Goblin", 1, 30, 400, 1, 50, 4, 1),
            ("Wolf", 1, 30, 400, 1, 70, 4, 1),
-           ("Cave Orc", 3, 500, 1, 100, 7, 2),
-           ("Cave Troll", 5, 1000, 2, 200, 10, 3),
+           ("Cave Orc", 3, 45, 500, 1, 100, 7, 2),
+           ("Cave Troll", 5, 80, 1000, 2, 200, 10, 3),
            ("Skeleton", 1, 30, 400, 1, 50, 4, 1),
            ("Orc Captain", 3, 100, 900, 2, 100, 7, 2),
            ("Orc Chef", 12, 1000, 4000, 3, 250, 12, 3),
@@ -52,12 +53,11 @@ if my_results is None:
            ("Wraith", 2, 30, 600, None, 50, 3, 1),
            ("Tiger", 2, 30, 600, None, 50, 3, 1),
            ("Eagle", 2, 30, 600, None, 50, 3, 1),
-           ("Goblin Chef", 12, 6500, 3, 250, 12, 3),
+           ("Goblin Chef", 12, 100, 6500, 3, 250, 12, 3),
            ("Bandit", 1, 40, 600, 2, 100, 4, 1),
            ("Bandit Captain", 3, 50, 1200, 3, 150, 8, 2)]
     cursor.executemany(sql, val)
     mydb.commit()
     print(cursor.rowcount, "record inserted.")
 else:
-    for i in my_results:
-        print(i)
+    print(my_results)
