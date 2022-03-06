@@ -1,9 +1,10 @@
 import mysql.connector
+import db_login_data
 
 mydb = mysql.connector.connect(
-  host="localhost",
-  user="root",
-  password="5699998"
+    host=db_login_data.host,
+    user=db_login_data.user,
+    password=db_login_data.password
 )
 
 mycursor = mydb.cursor()

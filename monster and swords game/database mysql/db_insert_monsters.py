@@ -1,10 +1,11 @@
 import mysql.connector
+import db_login_data
 
 mydb = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="5699998",
-    database="monsters_and_swords_game_db"
+    host=db_login_data.host,
+    user=db_login_data.user,
+    password=db_login_data.password,
+    database=db_login_data.user.monsters_and_swords_game_db
 )
 
 cursor = mydb.cursor()
