@@ -1,5 +1,5 @@
 from characters import *
-import locations, actions, containers, sort_backpack
+import locations, actions, containers, sort_backpack, items
 
 
 def greeting():
@@ -11,14 +11,14 @@ def create_character():
     chosen_name = input("What is your name ?")
     player = Creature(name=chosen_name)
     print(f"Now my dear {chosen_name} let's begin your battle for better tomorrow")
-    player.weapon_in_hand = Weapons(20, 2.0)
+    player.weapon_in_hand = items.Weapons(20, 2.0)
     backpack = containers.Backpack()
     player_sack = containers.GoldSack()
     return player, backpack, player_sack
 
 
 def inside_location_menu(player, player_sack, backpack):
-    player_location_move = input("""Which path will u take? left(1) - it's easy, right(2) or middle(3) - it's hell?
+    player_location_move = input("""\nWhich path will u take? left(1) - it's easy, right(2) or middle(3) - it's hell?
     Or maybe u want to flee(4) and return to your Camp.""")
     if player_location_move == '1' or player_location_move == 'left':
         enemy = locations.LocationPaths.easy_encounter()
@@ -45,7 +45,8 @@ def backpack_menu(player, player_sack, backpack):
     backpack_move = input("""What do you want to do?
     withdraw from back pack - type: 1
     sort items in backpack - type: 2
-    return to previous menu - type: 3""")
+    equip weapon - type: 3
+    return to previous menu - type: 4""")
     if backpack_move == '1':
         slot_index = int(input("which slot ?"))
         backpack.withdraw_item_from_slot(slot_index)
@@ -54,6 +55,10 @@ def backpack_menu(player, player_sack, backpack):
         sort_backpack.sort_empty_slots(backpack.backpack_slots)
         backpack_menu(player, player_sack, backpack)
     elif backpack_move == '3':
+        slot = input("From which slot do you want to equip weapon?? ")
+        actions.Actions.equip_weapon(player, backpack, slot)
+        backpack_menu(player, player_sack, backpack)
+    elif backpack_move == '4':
         in_game_menu(player, player_sack, backpack)
     else:
         backpack_menu(player, player_sack, backpack)

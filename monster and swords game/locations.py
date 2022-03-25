@@ -1,4 +1,16 @@
 import characters
+import mysql.connector
+import sys
+sys.path.insert(0, './database_mysql')
+from database_mysql import db_get_data, db_login_data
+
+
+mydb = mysql.connector.connect(
+    host=db_login_data.host,
+    user=db_login_data.user,
+    password=db_login_data.password,
+    database=db_login_data.database
+)
 
 
 class MarhabaDesert:
@@ -31,20 +43,28 @@ class Camp:
 
 
 class LocationPaths:
+
     @staticmethod
     def easy_encounter():
-        enemy = characters.EasyMonster()
-        print(f"You enforced {enemy._name} let's KILL HIM!")
+        dr = db_get_data.draw_enemy(1)     # dr as draw result
+        print(f"You enforced {dr[1]} let's KILL HIM!")
+        mw = db_get_data.get_weapon_stats(dr[2])     # mw as monster weapon
+        enemy = characters.Monster(dr[1], mw[1], float(mw[2]), dr[3], dr[4], dr[5], dr[6], dr[7])
         return enemy
 
     @staticmethod
     def medium_encounter():
-        enemy = characters.MediumMonster()
-        print(f"You enforced {enemy._name} let's KILL HIM!")
+        dr = db_get_data.draw_enemy(2)     # dr as draw result
+        print(f"You enforced {dr[1]} let's KILL HIM!")
+        mw = db_get_data.get_weapon_stats(dr[2])     # mw as monster weapon
+        enemy = characters.Monster(dr[1], mw[1], float(mw[2]), dr[3], dr[4], dr[5], dr[6], dr[7])
         return enemy
 
     @staticmethod
     def hard_encounter():
-        enemy = characters.HardMonster()
-        print(f"You enforced {enemy._name} let's KILL HIM!")
+        dr = db_get_data.draw_enemy(3)     # dr as draw result
+        print(f"You enforced {dr[1]} let's KILL HIM!")
+        mw = db_get_data.get_weapon_stats(dr[2])     # mw as monster weapon
+        enemy = characters.Monster(dr[1], mw[1], float(mw[2]), dr[3], dr[4], dr[5], dr[6], dr[7])
         return enemy
+

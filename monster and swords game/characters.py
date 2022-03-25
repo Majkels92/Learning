@@ -1,7 +1,6 @@
 """File containing code defining game content such as characters, items etc...."""
-from items import *
-import random
 import validators
+import items
 
 
 class Creature:
@@ -41,6 +40,8 @@ class Creature:
         if self.experience >= experience_needed:
             self.level += 1
             self.strength += str_lvl_bonus
+            self._health_points += 30
+
 
     # show instance: health points, mana points and speed
     def show_creature_stats(self):
@@ -54,49 +55,15 @@ class Creature:
         print(f"You are holding {self.weapon_in_hand}")
 
 
-class EasyMonster(Creature):
-    gained_experience = 100
-    EasyMonster_weapon = Weapons(6, 1)
-    gold_drop = random.randint(10, 20)
-    chest_drop = None
+class Monster(Creature):
 
-    def __init__(self, name="Orc", hp=random.randint(100, 200), mp=100, evasion=1):
-        Creature.__init__(self, name, hp, mp, evasion)
-        self.weapon_in_hand = EasyMonster.EasyMonster_weapon
-        self.player_basic_attack = 2
-
-
-class MediumMonster(Creature):
-    gained_experience = 2000
-    MediumMonster_weapon = Weapons(15, 1)
-    gold_drop = random.randint(10, 30)
-    chest_drop = Chest(1)  # drops wooden chest
-
-    def __init__(self, name="Orc Warrior", hp=random.randint(200, 300), mp=100, evasion=1):
-        Creature.__init__(self, name, hp, mp, evasion)
-        self.weapon_in_hand = MediumMonster.MediumMonster_weapon
-        self.player_basic_attack = 5
-
-
-class HardMonster(Creature):
-    gained_experience = 400
-    HardMonster_weapon = Weapons(20, 2)
-    gold_drop = random.randint(20, 40)
-    chest_drop = Chest()
-
-    def __init__(self, name="Orc Captain", hp=random.randint(300, 400), mp=100, evasion=1):
-        Creature.__init__(self, name, hp, mp, evasion)
-        self.weapon_in_hand = HardMonster.HardMonster_weapon
-        self.player_basic_attack = 10
-
-
-class LegendaryMonster(Creature):
-    gained_experience = 1000
-    LegendaryMonster_weapon = Weapons(35, 2)
-    gold_drop = random.randint(50, 120)
-    chest_drop = Chest()
-
-    def __init__(self, name="Orc Leader", hp=random.randint(500, 600), mp=100, evasion=1):
-        Creature.__init__(self, name, hp, mp, evasion)
-        self.weapon_in_hand = LegendaryMonster.LegendaryMonster_weapon
-        self.player_basic_attack = 20
+    def __init__(self, name, w_att, w_speed, gold_drop, gained_experience, chest_drop, hp, strength, evasion=1):
+        Creature.__init__(self)
+        self.name = name
+        self.weapon_in_hand = items.Weapons(w_att, w_speed)
+        self.gold_drop = gold_drop
+        self.gained_experience = gained_experience
+        self.chest_drop = chest_drop
+        self.hp = hp
+        self.player_basic_attack = strength
+        self.evasion = evasion

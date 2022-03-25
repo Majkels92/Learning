@@ -1,6 +1,17 @@
 import random
 import validators
 import enum
+import mysql.connector
+import sys
+sys.path.insert(0, './database_mysql')
+from database_mysql import db_login_data
+
+mydb = mysql.connector.connect(
+    host=db_login_data.host,
+    user=db_login_data.user,
+    password=db_login_data.password,
+    database=db_login_data.database
+)
 
 
 class Weapons:
@@ -12,7 +23,7 @@ class Weapons:
         self.additional_damage = 0
 
     def __repr__(self):
-        return f"This is Weapon with {self._basic_damage} dmg and {self._attack_speed} spd"
+        return f"Weapon with {self._basic_damage} dmg and {self._attack_speed} spd"
 
     @property
     def basic_damage(self):
@@ -61,6 +72,14 @@ class Weapons:
         else:
             return random.randint(86, 100)
 
+    @staticmethod
+    def draw_weapon():
+        mycursor = mydb.cursor()
+        mycursor.execute("SELECT * FROM weapons")
+        myresult = mycursor.fetchall()
+        draw_result = random.choices(myresult)
+        return draw_result[0]
+
     def weapon_damage_output(self):
         weapon_damage = self._basic_damage + self.additional_damage
         attack = weapon_damage + weapon_damage * round(random.uniform(-0.4, 0.4), 1)
@@ -88,17 +107,24 @@ class Chest:
             self.rarity = rarity
         self.gold_drop = self.chest_gold_drop()
         self.weapon_drop = self.chest_weapon_drop()
+        self.name = ChestTypes(rarity).name
 
     def __repr__(self):
-        return f"This is {self.rarity.name} chest with {self.gold_drop} gold and {self.weapon_drop}"
+        return f"This is {self.name} chest with {self.gold_drop} gold and {self.weapon_drop}"
 
     # draws and set rarity of chest
     @staticmethod
     def draw_rarity():
         chest_list = [c_type for c_type in ChestTypes]
+        print(chest_list)
         draw_chest_type = random.choices(chest_list, [70, 25, 5])
         drawn_chest = draw_chest_type[0]  # gives string type variable
         return drawn_chest
+
+    @staticmethod
+    def set_rarity():
+        pass
+
 
     # draws amount of gold dropped from chest
     def chest_gold_drop(self):
@@ -124,3 +150,4 @@ class Chest:
         sack.put_gold_into_sack(gold_received)
         weapon_received = self.weapon_drop
         backpack.put_item_into_backpack(weapon_received)
+        print(f"\n You got:{self.gold_drop}gold \n and: {self.weapon_drop}")

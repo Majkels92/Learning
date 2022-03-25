@@ -1,6 +1,7 @@
 import random
 import validators
 import time
+import items
 
 
 class ActionsFight:
@@ -33,13 +34,20 @@ class Actions:
 
     @staticmethod
     def loot_chest(chest_source, sack, backpack):
-        chest_source.chest_drop.open_chest(sack, backpack)
+        items.Chest(chest_source.chest_drop).open_chest(sack, backpack)
 
     @staticmethod
     def gain_experience(player, experience_source):
         player.experience += experience_source.gained_experience
         print(f"You gained {experience_source.gained_experience} EXP")
         player.leveling_method()
+
+    @staticmethod
+    def equip_weapon(player, backpack, slot):
+        temporary_1 = player.weapon_in_hand
+        temporary_2 = backpack.backpack_slots[int(slot)-1]
+        player.weapon_in_hand = temporary_2
+        backpack.backpack_slots[int(slot)-1] = temporary_1
 
 
 class Fight:
@@ -80,8 +88,9 @@ class Fight:
             print("You died, GAME OVER")
             exit()
         else:
-            print("You won fight!")
+            print("You won fight!\n")
             if enemy.chest_drop is not None:
                 Actions.loot_chest(enemy, player_sack, backpack)
             Actions.loot_gold(enemy, player_sack)
+            print(f"\nMonster dropped {enemy.gold_drop} gold")
             Actions.gain_experience(player, enemy)
