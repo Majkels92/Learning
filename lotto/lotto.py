@@ -3,17 +3,17 @@ import random
 
 def general_func_for_lotto(amount, total_amount):
     random_list = random.sample(range(1, total_amount + 1), amount)
-    print(random_list)
+    return random_list
 
 
 def duze_lotto():
     random_list = random.sample(range(1, 50), 6)
-    print(random_list)
+    return random_list
 
 
 def mini_lotto():
     random_list = random.sample(range(1, 43), 5)
-    print(random_list)
+    return random_list
 
 
 def system_4_mini():
@@ -27,8 +27,8 @@ def system_4_mini():
             list_of_numbers.remove(x)
             bet.append(x)
         bets.append(bet)
-    for k in range(1, 9):
-        print(f"Lottery ticket number {k}:", sorted(bets[k-1]))
+    return bets
+
 
 def menu():
 
@@ -39,11 +39,15 @@ def menu():
     
     I am choosing: """)
     if choice == '1':
-        duze_lotto()
+        result = duze_lotto()
+        print(result)
     elif choice == '2':
-        mini_lotto()
+        result = mini_lotto()
+        print(result)
     elif choice == '3':
-        system_4_mini()
+        result = system_4_mini()
+        for k in range(1, 9):
+            print(f"Lottery ticket number {k}:", sorted(result[k - 1]))
     else:
         print("Can't find function, try again: ")
         menu()
