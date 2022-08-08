@@ -47,7 +47,7 @@ def menu():
     elif choice == '3':
         result = system_4_mini()
         for k in range(1, 9):
-            print(f"Lottery ticket number {k}:", sorted(result[k - 1]))
+            print(f"Lottery ticket number {k}:", sorted(result[k-1]))
     else:
         print("Can't find function, try again: ")
         menu()

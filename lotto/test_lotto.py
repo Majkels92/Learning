@@ -23,6 +23,7 @@ class Test_lotto(unittest.TestCase):
     def test_system_4_mini(self):
         self.assertIsInstance(lotto.system_4_mini(), list, msg="Result is not a list")
         self.assertEqual(len(lotto.system_4_mini()), 8, msg="Result has not 8 lists")
+
         # validating bets and drawn numbers
         bets = lotto.system_4_mini()
         for bet in bets:
