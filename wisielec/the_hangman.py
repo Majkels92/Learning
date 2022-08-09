@@ -1,6 +1,7 @@
 import hangman_stage
 import random
 import os
+import string
 
 
 def clear():
@@ -12,10 +13,14 @@ def gain_words_from_text(text_file):  # gain list of words from text
     pool_of_words = []
     with open(text_file, "r", encoding="UTF-8") as file:
         raw_txt = file.read()
-    words_of_raw_txt = set(raw_txt.replace("?", "").replace("!", "").replace(",", "").replace(".", "").lower().
-                           replace("(", "").replace("(", "").split())
+    # deleting all numbers from text
+    no_numbers_raw_text = raw_txt.translate(str.maketrans('', '', string.digits))
+    # deleting all punctuation from text
+    no_numbers_and_punctuation_raw_text = no_numbers_raw_text.translate(str.maketrans('', '', string.punctuation))
+    words_of_raw_txt = set(no_numbers_and_punctuation_raw_text.replace("„", "").replace("”", "").replace("’", "").
+                           lower().split())
     for word in words_of_raw_txt:
-        if len(word) > 5 and "-" not in word:
+        if len(word) > 5:
             pool_of_words.append(word)
     return pool_of_words
 
