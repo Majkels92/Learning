@@ -9,7 +9,6 @@ def clear():
 
 
 def gain_words_from_text(text_file):  # gain list of words from text
-    global pool_of_words
     pool_of_words = []
     with open(text_file, "r", encoding="UTF-8") as file:
         raw_txt = file.read()
@@ -25,13 +24,12 @@ def gain_words_from_text(text_file):  # gain list of words from text
     return pool_of_words
 
 
-def draw_game_word_from_pool():  # draw word from pool
-    global word_letters, game_word
+def draw_game_word_from_pool(pool_of_words):  # draw word from pool
     word_letters = []
     game_word = random.choice(pool_of_words)
     for word_letter in game_word:
         word_letters.append(word_letter)
-    return game_word
+    return game_word, word_letters
 
 
 def hangman_failure_status():  # controls stage of gibbet and prints it
@@ -89,7 +87,7 @@ if __name__ == '__main__':
     print("""WANNA PLAY A GAME?\n\nRules are simple, guess the word and u will survive....\n\n""")
     gibbet_status = 0
     pool_of_words = gain_words_from_text("text.txt")  # gain list of words from text
-    game_word = draw_game_word_from_pool()  # draw word from pool
+    game_word, word_letters = draw_game_word_from_pool(pool_of_words)  # draw word from pool
     chosen_letters = []
     display_string = create_word_display(game_word)  # creates display list
     display_word_progress(display_string)
