@@ -1,41 +1,47 @@
 import requests
 import datetime
 
+cryptos = {
+    'bitcoin': 'Qwsogvtv82FCd',
+    'etherum': 'razxDUgYGNAdQ',
+    'dogecoin': 'a91GCGd_u96cF',
+    'shibainu': 'xz24e0BjL',
+    'litecoin': 'D7B1x_ks7WhV5',
+}
+
 
 def help_available_cryptos():
     """Informs user about avaible cryptos."""
     print("""bitcoin\netherum\ndogecoin\nshibainu\nlitecoin""")
 
 
-def downloading_data():
-    """Downloads from server chosen crypto data."""
-    cryptos = {
-        'bitcoin': 'Qwsogvtv82FCd',
-        'etherum': 'razxDUgYGNAdQ',
-        'dogecoin': 'a91GCGd_u96cF',
-        'shibainu': 'xz24e0BjL',
-        'litecoin': 'D7B1x_ks7WhV5',
-    }
-
-    crypto_input = input("enter the name of crypto which You want to choose: ")
-    if crypto_input in cryptos:
-        choice = cryptos[crypto_input]
+def validate_crypto_name():
+    crypto_name = str(input("enter the name of crypto which You want to choose: "))
+    if crypto_name in cryptos:
+        crypto_name = cryptos[crypto_name]
+        return crypto_name, True
     else:
         print("Sorry we do not have that crypto")
+        return None, False
 
-    url = f"https://api.coinranking.com/v2/coin/{choice}"
 
-    headers = {
-        "x-access-token": "coinrankingd8901efc7e4b47aafe481b49cf5deed5d7dd3e8b27d1c6a1"
-    }
-
+def downloading_data(crypto_name):
+    """Downloads from server chosen crypto data."""
+    headers = {"x-access-token": "coinrankingd8901efc7e4b47aafe481b49cf5deed5d7dd3e8b27d1c6a1"}
+    url = f"https://api.coinranking.com/v2/coin/{crypto_name}"
     r = requests.get(url, headers=headers)
     response = r.json()["data"]["coin"]
-
     chosen_crypto_symbol = response["symbol"]
     chosen_crypto_name = response["name"]
     chosen_crypto_price = response["price"]
     return response, chosen_crypto_price, chosen_crypto_name, chosen_crypto_symbol
+
+
+def check_n_print_price(crypto_name):
+    """Checks price of chosen crypto and appends that price to list to list"""
+    response, chosen_crypto_price, chosen_crypto_name, chosen_crypto_symbol = downloading_data(crypto_name)
+    print(f"Price of {chosen_crypto_name} is {float(chosen_crypto_price):.5f} [USD]")
+    appending_sought_item_to_list(crypto_name)
 
 
 def response_time_from_server():
@@ -45,27 +51,21 @@ def response_time_from_server():
     return time_log
 
 
-def appending_sought_item_to_list():
+def appending_sought_item_to_list(crypto_name):
     global price_list
     """Appends searched price of crypto to list as string."""
     response_time = response_time_from_server()
-    response, chosen_crypto_price, chosen_crypto_name, chosen_crypto_symbol = downloading_data()
+    response, chosen_crypto_price, chosen_crypto_name, chosen_crypto_symbol = downloading_data(crypto_name)
     item = f"[{response_time}] {chosen_crypto_symbol}: {chosen_crypto_name} {float(chosen_crypto_price):.5f} " \
            f"USD"
     price_list.append(item)
 
 
-def check_n_print_price():
-    """Checks price of chosen crypto and appends that price to list to list"""
-    response, chosen_crypto_price, chosen_crypto_name, chosen_crypto_symbol = downloading_data()
-    print(f"Price of {chosen_crypto_name} is {float(chosen_crypto_price):.5f} [USD]")
-    appending_sought_item_to_list()
 
-
-def single_crypto_data_log():
+def single_crypto_data_log(crypto_name):
     """Appends or creates file crypto log.txt with history of checked prices, represented as every record in new line.
     Every line contains time:crypto symbol:crypto name:crypto price with 5 numbers after decimal."""
-    response, chosen_crypto_price, chosen_crypto_name, chosen_crypto_symbol = downloading_data()
+    response, chosen_crypto_price, chosen_crypto_name, chosen_crypto_symbol = downloading_data(crypto_name)
     with open("crypto log.txt", "a") as file:
         response_time = response_time_from_server()
         file.write(f"[{response_time}] {chosen_crypto_symbol}: {chosen_crypto_name} {float(chosen_crypto_price):.5f} "
@@ -84,15 +84,27 @@ def menu():
     """Creates menu for App, function that controls App."""
     action = input("""I want to: """)
     if action == "check price":
-        check_n_print_price()
-        menu()
+        crypto_name, returned_value = validate_crypto_name()
+        if returned_value is True:
+            check_n_print_price(crypto_name)
+            menu()
+        else:
+            menu()
     elif action == "create log":
-        single_crypto_data_log()
-        print("\nFile with logs created/updated.\n")
-        menu()
+        crypto_name, returned_value = validate_crypto_name()
+        if returned_value is True:
+            single_crypto_data_log(crypto_name)
+            print("\nFile with logs created/updated.\n")
+            menu()
+        else:
+            menu()
     elif action == "save scores":
-        sought_crypto_data_log()
-        menu()
+        crypto_name, returned_value = validate_crypto_name()
+        if returned_value is True:
+            sought_crypto_data_log()
+            menu()
+        else:
+            menu()
     elif action == "exit":
         exit()
     elif action == "help":
